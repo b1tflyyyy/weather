@@ -1,5 +1,16 @@
 <RCC>
     <qresource prefix = "/">
         <file>main-window/MainWindow.qml</file>
+        <file>pages/main-page/MainPage.qml</file>
+        <file>components/SettingsIcon.qml</file>
+        <file>components/WeatherWidget.qml</file>
+        <file>components/ForecastPanel.qml</file>
+        <file>components/HourlyForecastPanel.qml</file>
+        <file>components/WeatherHourlyWidget.qml</file>
+        <file>assets/images/cloudy.png</file>
+        <file>assets/images/rainy.png</file>
+        <file>assets/images/sunny.png</file>
+        <file>assets/images/windy.png</file>
+        <file>assets/icons/settings.png</file>
     </qresource>
 </RCC>

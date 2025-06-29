@@ -23,6 +23,10 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 
+import "../pages/main-page"
+
+import "../components"
+
 Window {
     id: _mainWindow
 
@@ -31,4 +35,45 @@ Window {
 
     width: Screen.width * 0.5
     height: Screen.height * 0.5
+
+    minimumWidth: 1000
+    minimumHeight: 600
+
+    MainPage {
+        id: _mainPage
+        anchors.fill: parent 
+
+        ForecastPanel {
+            id: _forecastPanel
+
+            height: parent.height * 0.40
+            width: parent.width
+
+            anchors {
+                top: parent.top
+                topMargin: 20
+
+                left: parent.left
+                leftMargin: 10
+
+                right: parent.right
+                rightMargin: 10
+            }
+        }
+
+        HourlyForecastPanel {
+            id: _hourlyForecastPanel
+
+            height: parent.height * 0.40
+            width: parent.width
+
+            anchors {
+                top: _forecastPanel.bottom
+                topMargin: 20
+
+                left: _forecastPanel.left
+                right: _forecastPanel.right
+            }
+        }
+    }
 }

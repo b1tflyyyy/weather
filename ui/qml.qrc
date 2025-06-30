@@ -7,6 +7,7 @@
         <file>components/ForecastPanel.qml</file>
         <file>components/HourlyForecastPanel.qml</file>
         <file>components/WeatherHourlyWidget.qml</file>
+        <file>components/SettingsPanel.qml</file>
         <file>assets/images/cloudy.png</file>
         <file>assets/images/rainy.png</file>
         <file>assets/images/sunny.png</file>

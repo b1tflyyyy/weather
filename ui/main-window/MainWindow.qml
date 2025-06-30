@@ -75,5 +75,31 @@ Window {
                 right: _forecastPanel.right
             }
         }
+
+        SettingsPanel {
+            id: _settingsPanel
+        }
+
+        SettingsIcon {
+            id: _settingsIcon
+
+            defaultWidth: 32
+            defaultHeight: 32
+
+            animatedWidth: 36
+            animatedHeight: 36
+
+            anchors {
+                right: parent.right
+                rightMargin: 30
+
+                bottom: parent.bottom
+                bottomMargin: 30
+            }
+
+            onSettingsClicked: function() {
+                _settingsPanel.open()
+            }
+        }
     }
 }

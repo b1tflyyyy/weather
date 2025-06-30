@@ -21,53 +21,40 @@
 // SOFTWARE.
 
 import QtQuick 2.15
+import QtQuick.Controls
+import QtQuick.Effects
 
-Rectangle {
-    id: _settingsIcon 
 
-    property int defaultWidth: 0
-    property int defaultHeight: 0
+Drawer {
+    id: _settingsPanel
 
-    property int animatedWidth: 0
-    property int animatedHeight: 0
+    height: parent.height
+    width: parent.width * 0.80
 
-    signal settingsClicked()
+    edge: Qt.LeftEdge
+    closePolicy: Popup.CloseOnPressOutside
 
-    color: "transparent"
+    background: Rectangle {
+        id: _blurredBackground
 
-    width: _mouseArea.containsMouse ? animatedWidth : defaultWidth
-    height: _mouseArea.containsMouse ?  animatedHeight : defaultHeight 
+        color: "#7d7d7d"
+        clip: true
 
-    Behavior on width {
-        NumberAnimation {
-            duration: 200
-            easing.type: Easing.InOutCirc
-        }
-    }
+        layer {
+            enabled: true
+            smooth: true
 
-    Behavior on height {
-        NumberAnimation {
-            duration: 200
-            easing.type: Easing.InOutQuad
-        }
-    }
+            effect: MultiEffect {
+                maskEnabled: true
+                maskSource: _blurredBackground
 
-    Image {
-        anchors.fill: parent
+                blurEnabled: true
+                
+                blur: 1.0
+                blurMax: 32
 
-        mipmap: true
-        fillMode: Image.PreserveAspectFit
-
-        source: "qrc:/assets/icons/settings.png"
-    }
-
-    MouseArea {
-        id: _mouseArea
-        anchors.fill: parent
-
-        hoverEnabled: true
-        onClicked: function (mouse) {
-            settingsClicked()
+                antialiasing: true
+            }
         }
     }
 }

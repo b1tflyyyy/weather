@@ -21,8 +21,9 @@
 // SOFTWARE.
 
 import QtQuick 2.15
+import QtQuick.Effects
 
-Rectangle {
+Item {
     id: _weatherHourlyWidget
 
     property int hour: 0
@@ -30,92 +31,106 @@ Rectangle {
 
     property string weatherImage: ""
 
-    radius: 30
-
-    opacity: _mouseArea.containsMouse ? 1.0 : 0.7
-
-    Behavior on opacity {
-        NumberAnimation {
-            duration: 300
-            easing.type: Easing.InSine
-        }
-    }
-
-    gradient: Gradient {
-        GradientStop {
-            position: 0.0
-            color: "#ad6518"
-        }
-
-        GradientStop {
-            position: 0.5
-            color: "#ad188d"
-        }
-    }
-
-    // border {
-    //     color: "#ffffff"
-    //     width: 1
-    // }
-
-    Text {
-        id: _degreesText
-
-        color: "#a6e4fc"
+    Rectangle {
+        id: _blurredBackground
 
         anchors {
-            top: parent.top
-            topMargin: 20
-
-            horizontalCenter: parent.horizontalCenter
+            fill: parent
         }
 
-        font {
-            pixelSize: parent.height * 0.20
+        radius: 20
+        clip: true
+
+        color: "#ffffff"
+        opacity: _mouseArea.containsMouse ? 0.6 : 0.4
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 400
+                easing.type: Easing.Linear
+            }
         }
 
-        text: "%1°".arg(degrees)
+        layer {
+            enabled: true
+            smooth: true
+
+            effect: MultiEffect {
+                maskEnabled: true
+                maskSource: _blurredBackground
+
+                blurEnabled: true
+                blur: 2.0
+
+                antialiasing: true
+            }
+        }
     }
 
-    Image {
-        id: _weatherImage
-
-        height: parent.height * 0.30
-        width: parent.width
+    Item {
+        id: _cardInfo
 
         anchors {
-            top: _degreesText.bottom
-            topMargin: 5
-
-            horizontalCenter: parent.horizontalCenter
+            fill: parent
         }
 
-        mipmap: true
-        smooth: true
+        Text {
+            id: _degreesText
 
-        fillMode: Image.PreserveAspectFit
+            color: "#a6e4fc"
 
-        source: _weatherHourlyWidget.weatherImage
-    }
+            anchors {
+                left: parent.left
+                leftMargin: 20
 
-    Text {
-        id: _hourText
+                verticalCenter: parent.verticalCenter
+            }
 
-        color: "#a6e4fc"
+            font {
+                pixelSize: parent.height * 0.30
+            }
 
-        anchors {
-            top: _weatherImage.bottom
-            topMargin: 2
-
-            horizontalCenter: parent.horizontalCenter 
+            text: "%1°".arg(degrees)
         }
 
-        font {
-            pixelSize: parent.height * 0.10
-            bold: true
+        Image {
+            id: _weatherImage
+
+            height: parent.height * 0.30
+            width: parent.width * 0.60
+
+            anchors {
+                left: _degreesText.left
+                verticalCenter: parent.verticalCenter
+            }
+
+            mipmap: true
+            smooth: true
+
+            fillMode: Image.PreserveAspectFit
+
+            source: _weatherHourlyWidget.weatherImage
         }
 
-        text: "AM %1".arg(hour)
+        Text {
+            id: _hourText
+
+            color: "#a6e4fc"
+
+            anchors {
+                right: parent.right 
+                rightMargin: 25
+
+                verticalCenter: parent.verticalCenter 
+            }
+
+            font {
+                pixelSize: parent.height * 0.20
+                bold: true
+            }
+
+            text: "AM %1".arg(hour)
+        }
     }
 
     MouseArea {

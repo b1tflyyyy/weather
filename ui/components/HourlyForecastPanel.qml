@@ -28,7 +28,7 @@ ListView {
 
     property real scrollingSpeed: 15.0
 
-    ListModel {
+    ListModel { // for test
         id: _testHourlyForecastModel
 
         ListElement {
@@ -90,7 +90,7 @@ ListView {
 
             weatherImage: "qrc:/assets/images/windy.png"
         }
-    }
+    } // for test
 
     Behavior on contentX {
         NumberAnimation {
@@ -109,8 +109,8 @@ ListView {
     model: _testHourlyForecastModel
 
     delegate: WeatherHourlyWidget {
-        width: model.width
-        height: model.height
+        width: _hourlyForecastPanel.width * 0.30
+        height: _hourlyForecastPanel.height
 
         hour: model.hour
         degrees: model.degrees
@@ -126,6 +126,5 @@ ListView {
 
     layer {
         enabled: true
-        // smooth: true
     }
 }

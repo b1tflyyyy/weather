@@ -64,7 +64,7 @@ Window {
         HourlyForecastPanel {
             id: _hourlyForecastPanel
 
-            height: parent.height * 0.40
+            height: parent.height * 0.20
             width: parent.width
 
             anchors {

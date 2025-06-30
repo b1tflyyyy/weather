@@ -113,8 +113,8 @@ ListView {
     model: _testForecastModel
     
     delegate: WeatherWidget {
-        height: _forecastPanel.height // model.height
-        width: _forecastPanel.width * 0.40 // model.width
+        height: _forecastPanel.height 
+        width: _forecastPanel.width * 0.40
 
         weatherImage: model.weatherImage
         weatherDescription: model.weatherDescription

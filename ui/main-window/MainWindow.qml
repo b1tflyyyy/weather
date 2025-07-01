@@ -24,8 +24,10 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 
 import "../pages/main-page"
+import "../pages/settings-page"
 
-import "../components"
+import "../components/daily-forecast-panel"
+import "../components/hourly-forecast-panel"
 
 Window {
     id: _mainWindow
@@ -43,7 +45,7 @@ Window {
         id: _mainPage
         anchors.fill: parent 
 
-        ForecastPanel {
+        DailyForecastPanel {
             id: _forecastPanel
 
             height: parent.height * 0.40
@@ -76,7 +78,7 @@ Window {
             }
         }
 
-        SettingsPanel {
+        SettingsPage {
             id: _settingsPanel
         }
 

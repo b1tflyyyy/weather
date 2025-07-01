@@ -108,7 +108,7 @@ ListView {
 
     model: _testHourlyForecastModel
 
-    delegate: WeatherHourlyWidget {
+    delegate: HourlyWeatherWidget {
         width: _hourlyForecastPanel.width * 0.30
         height: _hourlyForecastPanel.height
 

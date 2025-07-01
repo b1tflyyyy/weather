@@ -24,9 +24,8 @@ import QtQuick 2.15
 import QtQuick.Controls
 import QtQuick.Effects
 
-
 Drawer {
-    id: _settingsPanel
+    id: _settingsPage
 
     height: parent.height
     width: parent.width * 0.80

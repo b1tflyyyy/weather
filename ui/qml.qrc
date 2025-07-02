@@ -4,6 +4,8 @@
         <file>pages/main-page/MainPage.qml</file>
         <file>pages/settings-page/SettingsIcon.qml</file>
         <file>pages/settings-page/SettingsPage.qml</file>
+        <file>pages/settings-page/components/ThemeWidget.qml</file>
+        <file>pages/settings-page/components/ThemePanel.qml</file>
         <file>components/daily-forecast-panel/DailyWeatherWidget.qml</file>
         <file>components/daily-forecast-panel/DailyForecastPanel.qml</file>
         <file>components/hourly-forecast-panel/HourlyForecastPanel.qml</file>

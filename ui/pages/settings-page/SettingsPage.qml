@@ -24,6 +24,8 @@ import QtQuick 2.15
 import QtQuick.Controls
 import QtQuick.Effects
 
+import "components"
+
 Drawer {
     id: _settingsPage
 
@@ -54,6 +56,21 @@ Drawer {
 
                 antialiasing: true
             }
+        }
+    }
+
+    ThemePanel {
+        id: _themePanel
+
+        height: parent.height * 0.80
+        width: parent.width * 0.40
+
+        anchors {
+            right: parent.right
+            rightMargin: 30
+
+            top: parent.top
+            topMargin: 20
         }
     }
 }

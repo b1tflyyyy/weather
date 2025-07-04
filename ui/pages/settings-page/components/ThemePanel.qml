@@ -86,7 +86,7 @@ ListView {
             }
 
             onClicked: function (mouse) {
-                themeManager.SetCurrentTheme(index)
+                themeController.SetCurrentTheme(index)
             }
         }
     }

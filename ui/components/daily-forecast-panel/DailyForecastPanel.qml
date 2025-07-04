@@ -118,12 +118,12 @@ ListView {
         height: _forecastPanel.height 
         width: _forecastPanel.width * 0.40
 
-        dayColor: themeManager.currentTheme.dailyForecastDayColor
-        degreesColor: themeManager.currentTheme.dailyForecastDegreesColor
-        highLowDegreesColor: themeManager.currentTheme.dailyForecastHighLowDegreesColor
-        locationColor: themeManager.currentTheme.dailyForecastLocationColor
-        descriptionColor: themeManager.currentTheme.dailyForecastDescriptionColor
-        cardColor: themeManager.currentTheme.dailyForecastCardColor
+        dayColor: themeController.currentTheme.dailyForecastDayColor
+        degreesColor: themeController.currentTheme.dailyForecastDegreesColor
+        highLowDegreesColor: themeController.currentTheme.dailyForecastHighLowDegreesColor
+        locationColor: themeController.currentTheme.dailyForecastLocationColor
+        descriptionColor: themeController.currentTheme.dailyForecastDescriptionColor
+        cardColor: themeController.currentTheme.dailyForecastCardColor
 
         weatherImage: model.weatherImage
         weatherDescription: model.weatherDescription

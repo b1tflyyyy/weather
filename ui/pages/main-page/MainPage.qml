@@ -26,27 +26,27 @@ import QtQuick.Effects
 Rectangle {
     id: _mainPage
 
-    property color firstColor: themeManager.currentTheme.weatherBackgroundFirstColor
-    property color secondColor: themeManager.currentTheme.weatherBackgroundSecondColor
-    property color thirdColor: themeManager.currentTheme.weatherBackgroundThirdColor
+    property color firstColor: themeController.currentTheme.weatherBackgroundFirstColor
+    property color secondColor: themeController.currentTheme.weatherBackgroundSecondColor
+    property color thirdColor: themeController.currentTheme.weatherBackgroundThirdColor
 
     Behavior on firstColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on secondColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on thirdColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
@@ -55,17 +55,17 @@ Rectangle {
         orientation: Gradient.Horizontal
 
         GradientStop {
-            position: themeManager.currentTheme.weatherBackgroundFirstColorPosition
+            position: themeController.currentTheme.weatherBackgroundFirstColorPosition
             color:  firstColor 
         }
 
         GradientStop {
-            position: themeManager.currentTheme.weatherBackgroundSecondColorPosition
+            position: themeController.currentTheme.weatherBackgroundSecondColorPosition
             color: secondColor
         }
 
         GradientStop {
-            position: themeManager.currentTheme.weatherBackgroundThirdColorPosition
+            position: themeController.currentTheme.weatherBackgroundThirdColorPosition
             color: thirdColor
         }
     }

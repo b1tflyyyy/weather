@@ -37,21 +37,21 @@ Item {
 
     Behavior on degreesColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on timeColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on cardColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }

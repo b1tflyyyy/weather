@@ -46,42 +46,42 @@ Item {
 
     Behavior on dayColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on degreesColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on highLowDegreesColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on locationColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on descriptionColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on cardColor {
         ColorAnimation {
-            duration: 2000
+            duration: animationSpeedController.animationSpeed.themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }

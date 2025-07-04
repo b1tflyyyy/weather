@@ -22,6 +22,4 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-add_subdirectory(app)
-add_subdirectory(model)
-add_subdirectory(manager)
+add_subdirectory(theme-manager)

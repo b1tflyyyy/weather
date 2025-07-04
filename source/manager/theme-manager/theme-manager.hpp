@@ -20,42 +20,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
+#pragma once
 
-#include <QSurfaceFormat>
+#include <QObject>
+#include <QVector>
+#include <QString>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonArray>
 
-#include <manager/theme-manager/theme-manager.hpp>
-#include <model/theme-list-model/theme-list-model.hpp>
+#include <model/theme-model/theme-model.hpp>
 
-int main(int argc, char** argv)
+class ThemeManager : public QObject
 {
-    ThemeManager theme_manager;
+    Q_OBJECT
+
+    Q_PROPERTY(QObject* currentTheme READ GetCurrentTheme NOTIFY currentThemeChanged)
+
+public:
+    explicit ThemeManager(QObject* parent = nullptr);
+    ~ThemeManager() noexcept override = default;
+
+    ThemeManager(const ThemeManager&) = delete;
+    ThemeManager& operator=(const ThemeManager&) = delete;
+
+    ThemeManager(ThemeManager&&) noexcept = delete;
+    ThemeManager& operator=(ThemeManager&&) noexcept = delete;
+
+    void LoadThemes(const QString& path);
     
-    try 
-    {
-        theme_manager.LoadThemes(QStringLiteral("themes.json"));
-    }
-    catch (const std::runtime_error& e)
-    {
-        qDebug() << e.what() << '\n';
-    }
+    QObject* GetCurrentTheme();
+    Q_INVOKABLE void SetCurrentTheme(qsizetype index);
 
-    ThemeListModel theme_list_model{ theme_manager.GetThemes() };
+    const QVector<QSharedPointer<ThemeModel>>& GetThemes() const noexcept;
 
-    QGuiApplication app{ argc, argv };
-    QQmlApplicationEngine engine{};
+signals:
+    void currentThemeChanged();
 
-    auto* ctx{ engine.rootContext() };
-    
-    ctx->setContextProperty(QStringLiteral("themeManager"), &theme_manager);
-    ctx->setContextProperty(QStringLiteral("themeListModel"), &theme_list_model);
-
-    qmlRegisterUncreatableType<ThemeModel>("ThemeModel", 1, 0, "ThemeModel", "");
-
-    const QUrl& url{ QStringLiteral("qrc:/main-window/MainWindow.qml") };
-    engine.load(url);
-
-    return QGuiApplication::exec();
-}
+private:
+    QVector<QSharedPointer<ThemeModel>> mThemes;
+    qsizetype mCurrentThemeIndex;
+};

@@ -22,6 +22,9 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-add_subdirectory(app)
-add_subdirectory(model)
-add_subdirectory(manager)
+set(LIB_NAME theme_list_model_lib)
+
+add_library(${LIB_NAME} STATIC theme-list-model.hpp theme-list-model.cpp)
+enable_qt_autogen(${LIB_NAME})
+
+target_link_libraries(${LIB_NAME} PUBLIC qt6_lib theme_model_lib)

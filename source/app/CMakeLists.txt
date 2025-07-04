@@ -30,4 +30,6 @@ enable_qt_autogen(${PROJECT_NAME})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     qt6_lib
+    theme_manager_lib
+    theme_list_model_lib
 )

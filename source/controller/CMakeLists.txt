@@ -22,9 +22,5 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-set(LIB_NAME theme_manager_lib)
-
-add_library(${LIB_NAME} theme-manager.hpp theme-manager.cpp)
-enable_qt_autogen(${LIB_NAME})
-
-target_link_libraries(${LIB_NAME} PUBLIC qt6_lib theme_model_lib)
+add_subdirectory(theme-controller)
+add_subdirectory(animation-speed-controller)

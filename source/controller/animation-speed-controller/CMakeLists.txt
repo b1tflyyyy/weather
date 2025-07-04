@@ -22,4 +22,9 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-add_subdirectory(theme-manager)
+set(LIB_NAME animation_speed_manager_lib)
+
+add_library(${LIB_NAME} animation-speed-controller.hpp animation-speed-controller.cpp)
+enable_qt_autogen(${LIB_NAME})
+
+target_link_libraries(${LIB_NAME} PUBLIC qt6_lib animation_speed_model_lib)

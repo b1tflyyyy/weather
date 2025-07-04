@@ -24,3 +24,4 @@ cmake_minimum_required(VERSION 3.28)
 
 add_subdirectory(theme-model)
 add_subdirectory(theme-list-model)
+add_subdirectory(animation-speed-model)

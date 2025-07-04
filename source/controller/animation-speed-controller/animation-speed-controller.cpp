@@ -20,19 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "theme-manager.hpp"
+#include "animation-speed-controller.hpp"
 
-ThemeManager::ThemeManager(QObject* parent)
-    : QObject{ parent }
-    , mCurrentThemeIndex{}
-{ }
-
-void ThemeManager::LoadThemes(const QString& path)
+void AnimationSpeedController::LoadAnimationSettings(const QString& path)
 {
     QFile file{ path };
     if (!file.open(QIODevice::ReadOnly))
     {
-        throw std::runtime_error{ "failed to open themes file" };
+        throw std::runtime_error{ "failed to open animation settings file" };
     }
 
     QByteArray data{ file.readAll() };
@@ -40,38 +35,13 @@ void ThemeManager::LoadThemes(const QString& path)
 
     QJsonParseError err{};
     auto doc{ QJsonDocument::fromJson(data, &err) };
-    
+
     if (err.error != QJsonParseError::NoError)
     {
         throw std::runtime_error{ "failed to parse json" };
     }
-    if (!doc.isArray())
-    {
-        throw std::runtime_error{ "json is not an array" };
-    }
 
-    QJsonArray json_arr{ doc.array() };
-    
-    QVector<QSharedPointer<ThemeModel>> copy{};
-    copy.reserve(json_arr.size());
-
-    for (const auto& el : json_arr)
-    {
-        copy.push_back(ThemeModel::FromJSON(el.toObject()));
-    }
-
-    std::swap(copy, mThemes);
+    mAnimationSpeedModel = AnimationSpeedModel::FromJSON(doc.object());
 }
 
-QObject* ThemeManager::GetCurrentTheme() { return mThemes[mCurrentThemeIndex].data(); }
-
-void ThemeManager::SetCurrentTheme(qsizetype index)
-{
-    if (mCurrentThemeIndex != index)
-    {
-        mCurrentThemeIndex = index;
-        emit currentThemeChanged();
-    }
-}
-
-const QVector<QSharedPointer<ThemeModel>>& ThemeManager::GetThemes() const noexcept { return mThemes; }
+QObject* AnimationSpeedController::GetAnimationSpeed() { return mAnimationSpeedModel.data(); }

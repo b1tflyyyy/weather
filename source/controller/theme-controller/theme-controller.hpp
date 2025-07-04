@@ -31,21 +31,21 @@
 
 #include <model/theme-model/theme-model.hpp>
 
-class ThemeManager : public QObject
+class ThemeController : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(QObject* currentTheme READ GetCurrentTheme NOTIFY currentThemeChanged)
 
 public:
-    explicit ThemeManager(QObject* parent = nullptr);
-    ~ThemeManager() noexcept override = default;
+    explicit ThemeController(QObject* parent = nullptr);
+    ~ThemeController() noexcept override = default;
 
-    ThemeManager(const ThemeManager&) = delete;
-    ThemeManager& operator=(const ThemeManager&) = delete;
+    ThemeController(const ThemeController&) = delete;
+    ThemeController& operator=(const ThemeController&) = delete;
 
-    ThemeManager(ThemeManager&&) noexcept = delete;
-    ThemeManager& operator=(ThemeManager&&) noexcept = delete;
+    ThemeController(ThemeController&&) noexcept = delete;
+    ThemeController& operator=(ThemeController&&) noexcept = delete;
 
     void LoadThemes(const QString& path);
     

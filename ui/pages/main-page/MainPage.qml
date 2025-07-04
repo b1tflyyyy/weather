@@ -30,23 +30,25 @@ Rectangle {
     property color secondColor: themeController.currentTheme.weatherBackgroundSecondColor
     property color thirdColor: themeController.currentTheme.weatherBackgroundThirdColor
 
+    readonly property int themeChangingDuration: animationSpeedController.animationSpeed.themeChangingDuration
+
     Behavior on firstColor {
         ColorAnimation {
-            duration: animationSpeedController.animationSpeed.themeChangingDuration
+            duration: themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on secondColor {
         ColorAnimation {
-            duration: animationSpeedController.animationSpeed.themeChangingDuration
+            duration: themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on thirdColor {
         ColorAnimation {
-            duration: animationSpeedController.animationSpeed.themeChangingDuration
+            duration: themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }

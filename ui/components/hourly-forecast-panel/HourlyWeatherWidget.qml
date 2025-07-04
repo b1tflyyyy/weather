@@ -35,23 +35,25 @@ Item {
     property color timeColor 
     property color cardColor
 
+    readonly property int themeChangingDuration: animationSpeedController.animationSpeed.themeChangingDuration
+
     Behavior on degreesColor {
         ColorAnimation {
-            duration: animationSpeedController.animationSpeed.themeChangingDuration
+            duration: themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on timeColor {
         ColorAnimation {
-            duration: animationSpeedController.animationSpeed.themeChangingDuration
+            duration: themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
     Behavior on cardColor {
         ColorAnimation {
-            duration: animationSpeedController.animationSpeed.themeChangingDuration
+            duration: themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }

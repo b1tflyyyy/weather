@@ -37,6 +37,55 @@ Item {
     property int degreesLow: -100
     property int degreesHigh: 100
 
+    property color dayColor
+    property color degreesColor
+    property color highLowDegreesColor
+    property color locationColor
+    property color descriptionColor
+    property color cardColor 
+
+    Behavior on dayColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
+
+    Behavior on degreesColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
+
+    Behavior on highLowDegreesColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
+
+    Behavior on locationColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
+
+    Behavior on descriptionColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
+
+    Behavior on cardColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
+
     Rectangle {
         id: _blurredBackground
 
@@ -47,7 +96,7 @@ Item {
         radius: 20
         clip: true
 
-        color: "#ffffff"
+        color: cardColor
         opacity: _mouseArea.containsMouse ? 0.6 : 0.4
 
         Behavior on opacity {
@@ -104,7 +153,7 @@ Item {
             height: parent.height * 0.10
             width: parent.width * 0.10
 
-            color: "#ffffff"
+            color: dayColor
 
             anchors {
                 top: parent.top
@@ -127,7 +176,7 @@ Item {
             height: parent.height * 0.50
             width: parent.width * 0.30
 
-            color: "#b3e5fc"
+            color: degreesColor
 
             anchors {
                 top: parent.top
@@ -150,7 +199,7 @@ Item {
             height: parent.height * 0.10
             width: parent.width * 0.15
 
-            color: "#606060"
+            color: highLowDegreesColor
 
             anchors {
                 top: _degreesText.bottom
@@ -173,7 +222,7 @@ Item {
             height: parent.height * 0.10
             width: parent.width * 0.15
 
-            color: "#ffffffcc"
+            color: locationColor
 
             anchors {
                 top: _highLowTemperatureText.bottom
@@ -193,7 +242,7 @@ Item {
             height: parent.height * 0.05
             width: parent.width * 0.15
 
-            color: "#ffffffcc"
+            color: descriptionColor
 
             anchors {
                 top: _weatherImage.bottom

@@ -31,6 +31,31 @@ Item {
 
     property string weatherImage: ""
 
+    property color degreesColor
+    property color timeColor 
+    property color cardColor
+
+    Behavior on degreesColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
+
+    Behavior on timeColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
+
+    Behavior on cardColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
+
     Rectangle {
         id: _blurredBackground
 
@@ -41,7 +66,7 @@ Item {
         radius: 20
         clip: true
 
-        color: "#ffffff"
+        color: cardColor
         opacity: _mouseArea.containsMouse ? 0.6 : 0.4
 
         Behavior on opacity {
@@ -77,7 +102,7 @@ Item {
         Text {
             id: _degreesText
 
-            color: "#a6e4fc"
+            color: degreesColor
 
             anchors {
                 left: parent.left
@@ -115,7 +140,7 @@ Item {
         Text {
             id: _hourText
 
-            color: "#a6e4fc"
+            color: timeColor
 
             anchors {
                 right: parent.right 

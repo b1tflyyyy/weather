@@ -41,6 +41,8 @@ Drawer {
         color: "#7d7d7d"
         clip: true
 
+        opacity: 0.5
+
         layer {
             enabled: true
             smooth: true

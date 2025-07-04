@@ -21,32 +21,52 @@
 // SOFTWARE.
 
 import QtQuick 2.15
+import QtQuick.Effects
 
 Rectangle {
     id: _mainPage
+
+    property color firstColor: themeManager.currentTheme.weatherBackgroundFirstColor
+    property color secondColor: themeManager.currentTheme.weatherBackgroundSecondColor
+    property color thirdColor: themeManager.currentTheme.weatherBackgroundThirdColor
+
+    Behavior on firstColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
+
+    Behavior on secondColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
+
+    Behavior on thirdColor {
+        ColorAnimation {
+            duration: 2000
+            easing.type: Easing.InQuint 
+        }
+    }
 
     gradient: Gradient {
         orientation: Gradient.Horizontal
 
         GradientStop {
-            position: 0.3
-            color: "#6a5acd"
+            position: themeManager.currentTheme.weatherBackgroundFirstColorPosition
+            color:  firstColor 
         }
 
         GradientStop {
-            position: 0.6
-            color: "#c54b8c"
+            position: themeManager.currentTheme.weatherBackgroundSecondColorPosition
+            color: secondColor
         }
 
         GradientStop {
-            position: 0.9
-            color: "#b284be"
+            position: themeManager.currentTheme.weatherBackgroundThirdColorPosition
+            color: thirdColor
         }
-    }
-
-    layer {
-        enabled: true
-        smooth: true
-        mipmap: true
     }
 }

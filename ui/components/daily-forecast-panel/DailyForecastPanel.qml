@@ -23,6 +23,8 @@
 import QtQuick 2.15
 import QtQuick.Controls
 
+import ThemeModel 1.0
+
 ListView {
     id: _forecastPanel
 
@@ -116,6 +118,13 @@ ListView {
         height: _forecastPanel.height 
         width: _forecastPanel.width * 0.40
 
+        dayColor: themeManager.currentTheme.dailyForecastDayColor
+        degreesColor: themeManager.currentTheme.dailyForecastDegreesColor
+        highLowDegreesColor: themeManager.currentTheme.dailyForecastHighLowDegreesColor
+        locationColor: themeManager.currentTheme.dailyForecastLocationColor
+        descriptionColor: themeManager.currentTheme.dailyForecastDescriptionColor
+        cardColor: themeManager.currentTheme.dailyForecastCardColor
+
         weatherImage: model.weatherImage
         weatherDescription: model.weatherDescription
 
@@ -132,9 +141,5 @@ ListView {
         onWheel: function (event) {
             _forecastPanel.flick(event.angleDelta.y * _forecastPanel.scrollingSpeed, 0)
         }
-    }
-
-    layer {
-        enabled: true
     }
 }

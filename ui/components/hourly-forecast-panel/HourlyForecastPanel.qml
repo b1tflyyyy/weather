@@ -112,6 +112,10 @@ ListView {
         width: _hourlyForecastPanel.width * 0.30
         height: _hourlyForecastPanel.height
 
+        degreesColor: themeManager.currentTheme.hourlyForecastDegreesColor
+        timeColor: themeManager.currentTheme.hourlyForecastTimeColor
+        cardColor: themeManager.currentTheme.hourlyForecastCardColor
+
         hour: model.hour
         degrees: model.degrees
 
@@ -122,9 +126,5 @@ ListView {
         onWheel: function (event) {
             _hourlyForecastPanel.flick(event.angleDelta.y * _hourlyForecastPanel.scrollingSpeed, 0)
         }
-    }
-
-    layer {
-        enabled: true
     }
 }

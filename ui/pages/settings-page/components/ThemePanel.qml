@@ -28,46 +28,6 @@ ListView {
     readonly property real scrollingSpeed: 15.0
     readonly property real itemRadius: 25
 
-    ListModel {
-        id: _testThemeModel 
-
-        ListElement {
-            themeName: "Swing"
-
-            firstColor: "#6a5acd"
-            secondColor: "#c54b8c"
-            thirdColor: "#b284be"
-
-            firstPosition: 0.3
-            secondPosition: 0.6
-            thirdPosition: 0.9
-        }
-
-        ListElement {
-            themeName: "Marley"
-
-            firstColor: "#00bfff"
-            secondColor: "#01ff01"
-            thirdColor: "#fdf718"
-
-            firstPosition: 0.3
-            secondPosition: 0.6
-            thirdPosition: 0.9
-        }
-
-        ListElement {
-            themeName: "Lacquer"
-
-            firstColor: "#fbceb1"
-            secondColor: "#ff6961"
-            thirdColor: "#ff6347"
-
-            firstPosition: 0.3
-            secondPosition: 0.6
-            thirdPosition: 0.9
-        }
-    }
-
     Behavior on contentX {
         NumberAnimation {
             duration: 100
@@ -78,7 +38,7 @@ ListView {
     orientation: ListView.Vertical
     spacing: 20
 
-    cacheBuffer: 7
+    cacheBuffer: 10
 
     boundsBehavior: Flickable.DragAndOvershootBounds
 
@@ -94,7 +54,7 @@ ListView {
     
     highlightFollowsCurrentItem: true
 
-    model: _testThemeModel
+    model: themeListModel
 
     delegate: ThemeWidget {
         height: _themePanel.height * 0.20
@@ -102,13 +62,13 @@ ListView {
 
         themeName: model.themeName
 
-        firstColor: model.firstColor
-        secondColor: model.secondColor
-        thirdColor: model.thirdColor
+        firstColor: model.weatherBackgroundFirstColor
+        secondColor: model.weatherBackgroundSecondColor
+        thirdColor: model.weatherBackgroundThirdColor
 
-        firstPosition: model.firstPosition
-        secondPosition: model.secondPosition
-        thirdPosition: model.thirdPosition
+        firstPosition: model.weatherBackgroundFirstColorPosition
+        secondPosition: model.weatherBackgroundSecondColorPosition
+        thirdPosition: model.weatherBackgroundThirdColorPosition
 
         backgroundRadius: _themePanel.itemRadius
 
@@ -124,6 +84,10 @@ ListView {
             onEntered: function () {
                 _themePanel.currentIndex = index
             }
+
+            onClicked: function (mouse) {
+                themeManager.SetCurrentTheme(index)
+            }
         }
     }
 
@@ -131,9 +95,5 @@ ListView {
         onWheel: function (event) {
             _themePanel.flick(0, event.angleDelta.y * _themePanel.scrollingSpeed)
         }
-    }
-
-    layer {
-        enabled: true
     }
 }

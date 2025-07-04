@@ -24,10 +24,6 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 
 import "../pages/main-page"
-import "../pages/settings-page"
-
-import "../components/daily-forecast-panel"
-import "../components/hourly-forecast-panel"
 
 Window {
     id: _mainWindow
@@ -44,64 +40,5 @@ Window {
     MainPage {
         id: _mainPage
         anchors.fill: parent 
-
-        DailyForecastPanel {
-            id: _forecastPanel
-
-            height: parent.height * 0.40
-            width: parent.width
-
-            anchors {
-                top: parent.top
-                topMargin: 20
-
-                left: parent.left
-                leftMargin: 10
-
-                right: parent.right
-                rightMargin: 10
-            }
-        }
-
-        HourlyForecastPanel {
-            id: _hourlyForecastPanel
-
-            height: parent.height * 0.20
-            width: parent.width
-
-            anchors {
-                top: _forecastPanel.bottom
-                topMargin: 20
-
-                left: _forecastPanel.left
-                right: _forecastPanel.right
-            }
-        }
-
-        SettingsPage {
-            id: _settingsPanel
-        }
-
-        SettingsIcon {
-            id: _settingsIcon
-
-            defaultWidth: 32
-            defaultHeight: 32
-
-            animatedWidth: 36
-            animatedHeight: 36
-
-            anchors {
-                right: parent.right
-                rightMargin: 30
-
-                bottom: parent.bottom
-                bottomMargin: 30
-            }
-
-            onSettingsClicked: function() {
-                _settingsPanel.open()
-            }
-        }
     }
 }

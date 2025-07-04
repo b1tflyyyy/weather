@@ -23,8 +23,6 @@
 import QtQuick 2.15
 import QtQuick.Controls
 
-// import ThemeConfigModel 1.0
-
 ListView {
     id: _forecastPanel
 

@@ -2,14 +2,14 @@
     <qresource prefix = "/">
         <file>main-window/MainWindow.qml</file>
         <file>pages/main-page/MainPage.qml</file>
+        <file>pages/main-page/components/daily-forecast-panel/DailyWeatherWidget.qml</file>
+        <file>pages/main-page/components/daily-forecast-panel/DailyForecastPanel.qml</file>
+        <file>pages/main-page/components/hourly-forecast-panel/HourlyForecastPanel.qml</file>
+        <file>pages/main-page/components/hourly-forecast-panel/HourlyWeatherWidget.qml</file>
         <file>pages/settings-page/SettingsIcon.qml</file>
         <file>pages/settings-page/SettingsPage.qml</file>
         <file>pages/settings-page/components/ThemeWidget.qml</file>
         <file>pages/settings-page/components/ThemePanel.qml</file>
-        <file>components/daily-forecast-panel/DailyWeatherWidget.qml</file>
-        <file>components/daily-forecast-panel/DailyForecastPanel.qml</file>
-        <file>components/hourly-forecast-panel/HourlyForecastPanel.qml</file>
-        <file>components/hourly-forecast-panel/HourlyWeatherWidget.qml</file>
         <file>assets/images/cloudy.png</file>
         <file>assets/images/rainy.png</file>
         <file>assets/images/sunny.png</file>

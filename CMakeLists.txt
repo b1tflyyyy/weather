@@ -44,6 +44,10 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 # -----------------------------------------------------------------------
 include(QtAutoGeneration)
 
+# Include dirs
+# -----------------------------------------------------------------------
+include_directories(source)
+
 # Sub dirs ...
 # -----------------------------------------------------------------------
 add_subdirectory(source)

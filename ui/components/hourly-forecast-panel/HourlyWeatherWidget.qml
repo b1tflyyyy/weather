@@ -35,7 +35,7 @@ Item {
     property color timeColor 
     property color cardColor
 
-    readonly property int themeChangingDuration: animationSpeedController.animationSpeed.themeChangingDuration
+    readonly property int themeChangingDuration: animationConfigController.animationConfig.themeChangingDuration
 
     Behavior on degreesColor {
         ColorAnimation {

@@ -112,9 +112,9 @@ ListView {
         width: _hourlyForecastPanel.width * 0.30
         height: _hourlyForecastPanel.height
 
-        degreesColor: themeController.currentTheme.hourlyForecastDegreesColor
-        timeColor: themeController.currentTheme.hourlyForecastTimeColor
-        cardColor: themeController.currentTheme.hourlyForecastCardColor
+        degreesColor: themeConfigController.currentTheme.hourlyForecastDegreesColor
+        timeColor: themeConfigController.currentTheme.hourlyForecastTimeColor
+        cardColor: themeConfigController.currentTheme.hourlyForecastCardColor
 
         hour: model.hour
         degrees: model.degrees

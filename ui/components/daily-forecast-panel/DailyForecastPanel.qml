@@ -23,7 +23,7 @@
 import QtQuick 2.15
 import QtQuick.Controls
 
-import ThemeModel 1.0
+// import ThemeConfigModel 1.0
 
 ListView {
     id: _forecastPanel
@@ -118,12 +118,12 @@ ListView {
         height: _forecastPanel.height 
         width: _forecastPanel.width * 0.40
 
-        dayColor: themeController.currentTheme.dailyForecastDayColor
-        degreesColor: themeController.currentTheme.dailyForecastDegreesColor
-        highLowDegreesColor: themeController.currentTheme.dailyForecastHighLowDegreesColor
-        locationColor: themeController.currentTheme.dailyForecastLocationColor
-        descriptionColor: themeController.currentTheme.dailyForecastDescriptionColor
-        cardColor: themeController.currentTheme.dailyForecastCardColor
+        dayColor: themeConfigController.currentTheme.dailyForecastDayColor
+        degreesColor: themeConfigController.currentTheme.dailyForecastDegreesColor
+        highLowDegreesColor: themeConfigController.currentTheme.dailyForecastHighLowDegreesColor
+        locationColor: themeConfigController.currentTheme.dailyForecastLocationColor
+        descriptionColor: themeConfigController.currentTheme.dailyForecastDescriptionColor
+        cardColor: themeConfigController.currentTheme.dailyForecastCardColor
 
         weatherImage: model.weatherImage
         weatherDescription: model.weatherDescription

@@ -54,7 +54,7 @@ ListView {
     
     highlightFollowsCurrentItem: true
 
-    model: themeListModel
+    model: themeConfigListModel
 
     delegate: ThemeWidget {
         height: _themePanel.height * 0.20
@@ -86,7 +86,7 @@ ListView {
             }
 
             onClicked: function (mouse) {
-                themeController.SetCurrentTheme(index)
+                themeConfigController.SetCurrentTheme(index)
             }
         }
     }

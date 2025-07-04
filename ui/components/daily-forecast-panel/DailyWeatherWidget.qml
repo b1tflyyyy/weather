@@ -44,7 +44,7 @@ Item {
     property color descriptionColor
     property color cardColor 
 
-    readonly property int themeChangingDuration: animationSpeedController.animationSpeed.themeChangingDuration
+    readonly property int themeChangingDuration: animationConfigController.animationConfig.themeChangingDuration
 
     Behavior on dayColor {
         ColorAnimation {

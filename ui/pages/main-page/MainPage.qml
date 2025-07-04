@@ -26,11 +26,11 @@ import QtQuick.Effects
 Rectangle {
     id: _mainPage
 
-    property color firstColor: themeController.currentTheme.weatherBackgroundFirstColor
-    property color secondColor: themeController.currentTheme.weatherBackgroundSecondColor
-    property color thirdColor: themeController.currentTheme.weatherBackgroundThirdColor
+    property color firstColor: themeConfigController.currentTheme.weatherBackgroundFirstColor
+    property color secondColor: themeConfigController.currentTheme.weatherBackgroundSecondColor
+    property color thirdColor: themeConfigController.currentTheme.weatherBackgroundThirdColor
 
-    readonly property int themeChangingDuration: animationSpeedController.animationSpeed.themeChangingDuration
+    readonly property int themeChangingDuration: animationConfigController.animationConfig.themeChangingDuration
 
     Behavior on firstColor {
         ColorAnimation {
@@ -57,17 +57,17 @@ Rectangle {
         orientation: Gradient.Horizontal
 
         GradientStop {
-            position: themeController.currentTheme.weatherBackgroundFirstColorPosition
+            position: themeConfigController.currentTheme.weatherBackgroundFirstColorPosition
             color:  firstColor 
         }
 
         GradientStop {
-            position: themeController.currentTheme.weatherBackgroundSecondColorPosition
+            position: themeConfigController.currentTheme.weatherBackgroundSecondColorPosition
             color: secondColor
         }
 
         GradientStop {
-            position: themeController.currentTheme.weatherBackgroundThirdColorPosition
+            position: themeConfigController.currentTheme.weatherBackgroundThirdColorPosition
             color: thirdColor
         }
     }

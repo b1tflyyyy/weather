@@ -24,45 +24,51 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include <QSurfaceFormat>
+#include <model/animation-config/animation-config.hpp>
+#include <model/theme-config/theme-config.hpp>
+#include <model/theme-config-list/theme-config-list.hpp>
 
-#include <model/theme-list-model/theme-list-model.hpp>
-#include <model/animation-speed-model/animation-speed-model.hpp>
+#include <controller/theme-config/theme-config.hpp>
+#include <controller/animation-config/animation-config.hpp>
 
-#include <controller/animation-speed-controller/animation-speed-controller.hpp>
-#include <controller/theme-controller/theme-controller.hpp>
+static void RegisterQMLTypes();
 
 int main(int argc, char** argv)
 {
-    ThemeController theme_controller{};
-    AnimationSpeedController animation_speed_controller{};
+    ThemeConfigController theme_config_controller{};
+    AnimationConfigController animation_config_controller{};
 
     try 
     {
-        theme_controller.LoadThemes(QStringLiteral("themes.json"));
-        animation_speed_controller.LoadAnimationSettings(QStringLiteral("animation_settings.json"));
+        theme_config_controller.LoadThemes(QStringLiteral("themes.json"));
+        animation_config_controller.LoadAnimationSettings(QStringLiteral("animation_settings.json"));
     }
     catch (const std::runtime_error& e)
     {
         qDebug() << e.what() << '\n';
     }
 
-    ThemeListModel theme_list_model{ theme_controller.GetThemes() };
+    ThemeConfigListModel theme_config_list_model{ theme_config_controller.GetThemes() };
 
     QGuiApplication app{ argc, argv };
     QQmlApplicationEngine engine{};
 
     auto* ctx{ engine.rootContext() };
     
-    ctx->setContextProperty(QStringLiteral("themeController"), &theme_controller);
-    ctx->setContextProperty(QStringLiteral("themeListModel"), &theme_list_model);
-    ctx->setContextProperty(QStringLiteral("animationSpeedController"),  &animation_speed_controller);
+    ctx->setContextProperty(QStringLiteral("themeConfigController"), &theme_config_controller);
+    ctx->setContextProperty(QStringLiteral("themeConfigListModel"), &theme_config_list_model);
+    ctx->setContextProperty(QStringLiteral("animationConfigController"),  &animation_config_controller);
 
-    qmlRegisterUncreatableType<ThemeModel>("ThemeModel", 1, 0, "ThemeModel", "");
-    qmlRegisterUncreatableType<AnimationSpeedModel>("AnimationSpeedModel", 1, 0, "AnimationSpeedModel", "");
+    RegisterQMLTypes();
 
     const QUrl& url{ QStringLiteral("qrc:/main-window/MainWindow.qml") };
     engine.load(url);
 
     return QGuiApplication::exec();
+}
+
+void RegisterQMLTypes()
+{
+    qmlRegisterUncreatableType<ThemeConfigModel>("ThemeConfigModel", 1, 0, "ThemeConfigModel", "");
+    qmlRegisterUncreatableType<AnimationConfigModel>("AnimationConfigModel", 1, 0, "AnimationConfigModel", "");
 }

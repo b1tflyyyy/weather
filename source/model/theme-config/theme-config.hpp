@@ -29,7 +29,7 @@
 
 #include <QSharedPointer>
 
-class ThemeModel : public QObject
+class ThemeConfigModel : public QObject
 {
     Q_OBJECT
 
@@ -55,14 +55,14 @@ class ThemeModel : public QObject
     Q_PROPERTY(qreal weatherBackgroundThirdColorPosition READ GetWeatherBackgroundThirdColorPosition CONSTANT);
 
 public: 
-    ThemeModel() = default;
-    ~ThemeModel() noexcept override = default;
+    ThemeConfigModel() = default;
+    ~ThemeConfigModel() noexcept override = default;
 
-    ThemeModel(const ThemeModel&) = delete;
-    ThemeModel& operator=(const ThemeModel&) = delete;
+    ThemeConfigModel(const ThemeConfigModel&) = delete;
+    ThemeConfigModel& operator=(const ThemeConfigModel&) = delete;
 
-    ThemeModel(ThemeModel&&) = delete;
-    ThemeModel& operator=(ThemeModel&&) = delete;
+    ThemeConfigModel(ThemeConfigModel&&) = delete;
+    ThemeConfigModel& operator=(ThemeConfigModel&&) = delete;
 
     QString GetThemeName() const noexcept;
 
@@ -85,7 +85,7 @@ public:
     qreal GetWeatherBackgroundSecondColorPosition() const noexcept;
     qreal GetWeatherBackgroundThirdColorPosition() const noexcept;
 
-    static QSharedPointer<ThemeModel> FromJSON(const QJsonObject& obj);
+    static QSharedPointer<ThemeConfigModel> FromJSON(const QJsonObject& obj);
 
 private:
     // Theme Name

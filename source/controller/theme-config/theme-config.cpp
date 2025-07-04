@@ -20,14 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "theme-controller.hpp"
+#include "theme-config.hpp"
 
-ThemeController::ThemeController(QObject* parent)
+ThemeConfigController::ThemeConfigController(QObject* parent)
     : QObject{ parent }
     , mCurrentThemeIndex{}
 { }
 
-void ThemeController::LoadThemes(const QString& path)
+void ThemeConfigController::LoadThemes(const QString& path)
 {
     QFile file{ path };
     if (!file.open(QIODevice::ReadOnly))
@@ -52,20 +52,20 @@ void ThemeController::LoadThemes(const QString& path)
 
     QJsonArray json_arr{ doc.array() };
     
-    QVector<QSharedPointer<ThemeModel>> copy{};
+    QVector<QSharedPointer<ThemeConfigModel>> copy{};
     copy.reserve(json_arr.size());
 
     for (const auto& el : json_arr)
     {
-        copy.push_back(ThemeModel::FromJSON(el.toObject()));
+        copy.push_back(ThemeConfigModel::FromJSON(el.toObject()));
     }
 
-    std::swap(copy, mThemes);
+    std::swap(copy, mThemeConfigs);
 }
 
-QObject* ThemeController::GetCurrentTheme() { return mThemes[mCurrentThemeIndex].data(); }
+QObject* ThemeConfigController::GetCurrentTheme() { return mThemeConfigs[mCurrentThemeIndex].data(); }
 
-void ThemeController::SetCurrentTheme(qsizetype index)
+void ThemeConfigController::SetCurrentTheme(qsizetype index)
 {
     if (mCurrentThemeIndex != index)
     {
@@ -74,4 +74,4 @@ void ThemeController::SetCurrentTheme(qsizetype index)
     }
 }
 
-const QVector<QSharedPointer<ThemeModel>>& ThemeController::GetThemes() const noexcept { return mThemes; }
+const QVector<QSharedPointer<ThemeConfigModel>>& ThemeConfigController::GetThemes() const noexcept { return mThemeConfigs; }

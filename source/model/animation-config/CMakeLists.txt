@@ -22,9 +22,9 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-set(LIB_NAME animation_speed_model_lib)
+set(LIB_NAME animation_config_model)
 
-add_library(${LIB_NAME} animation-speed-model.hpp animation-speed-model.cpp)
+add_library(${LIB_NAME} animation-config.hpp animation-config.cpp)
 enable_qt_autogen(${LIB_NAME})
 
 target_link_libraries(${LIB_NAME} PUBLIC qt6_lib)

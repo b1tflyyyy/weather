@@ -22,9 +22,9 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-set(LIB_NAME theme_list_model_lib)
+set(LIB_NAME theme_config_list_model)
 
-add_library(${LIB_NAME} STATIC theme-list-model.hpp theme-list-model.cpp)
+add_library(${LIB_NAME} STATIC theme-config-list.hpp theme-config-list.cpp)
 enable_qt_autogen(${LIB_NAME})
 
-target_link_libraries(${LIB_NAME} PUBLIC qt6_lib theme_model_lib)
+target_link_libraries(${LIB_NAME} PUBLIC qt6_lib theme_config_model)

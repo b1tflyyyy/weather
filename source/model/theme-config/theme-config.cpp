@@ -20,32 +20,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "theme-model.hpp"
+#include "theme-config.hpp"
 
-QString ThemeModel::GetThemeName() const noexcept { return mThemeName; }
+QString ThemeConfigModel::GetThemeName() const noexcept { return mThemeName; }
 
-QColor ThemeModel::GetDailyForecastDayColor() const noexcept { return mDailyForecastDayColor; }
-QColor ThemeModel::GetDailyForecastDegreesColor() const noexcept { return mDailyForecastDegreesColor; }
-QColor ThemeModel::GetDailyForecastHighLowDegreesColor() const noexcept { return mDailyForecastHighLowDegreesColor; }
-QColor ThemeModel::GetDailyForecastLocationColor() const noexcept { return mDailyForecastLocationColor; }
-QColor ThemeModel::GetDailyForecastDescriptionColor() const noexcept { return mDailyForecastDescriptionColor; }
-QColor ThemeModel::GetDailyForecastCardColor() const noexcept { return mDailyForecastCardColor; }
+QColor ThemeConfigModel::GetDailyForecastDayColor() const noexcept { return mDailyForecastDayColor; }
+QColor ThemeConfigModel::GetDailyForecastDegreesColor() const noexcept { return mDailyForecastDegreesColor; }
+QColor ThemeConfigModel::GetDailyForecastHighLowDegreesColor() const noexcept { return mDailyForecastHighLowDegreesColor; }
+QColor ThemeConfigModel::GetDailyForecastLocationColor() const noexcept { return mDailyForecastLocationColor; }
+QColor ThemeConfigModel::GetDailyForecastDescriptionColor() const noexcept { return mDailyForecastDescriptionColor; }
+QColor ThemeConfigModel::GetDailyForecastCardColor() const noexcept { return mDailyForecastCardColor; }
 
-QColor ThemeModel::GetHourlyForecastDegreesColor() const noexcept { return mHourlyForecastDegreesColor; }
-QColor ThemeModel::GetHourlyForecastTimeColor() const noexcept { return mHourlyForecastTimeColor; }
-QColor ThemeModel::GetHourlyForecastCardColor() const noexcept { return mHourlyForecastCardColor; }
+QColor ThemeConfigModel::GetHourlyForecastDegreesColor() const noexcept { return mHourlyForecastDegreesColor; }
+QColor ThemeConfigModel::GetHourlyForecastTimeColor() const noexcept { return mHourlyForecastTimeColor; }
+QColor ThemeConfigModel::GetHourlyForecastCardColor() const noexcept { return mHourlyForecastCardColor; }
 
-QColor ThemeModel::GetWeatherBackgroundFirstColor() const noexcept { return mWeatherBackgroundFirstColor; }
-QColor ThemeModel::GetWeatherBackgroundSecondColor() const noexcept { return mWeatherBackgroundSecondColor; }
-QColor ThemeModel::GetWeatherBackgroundThirdColor() const noexcept { return mWeatherBackgroundThirdColor; }
+QColor ThemeConfigModel::GetWeatherBackgroundFirstColor() const noexcept { return mWeatherBackgroundFirstColor; }
+QColor ThemeConfigModel::GetWeatherBackgroundSecondColor() const noexcept { return mWeatherBackgroundSecondColor; }
+QColor ThemeConfigModel::GetWeatherBackgroundThirdColor() const noexcept { return mWeatherBackgroundThirdColor; }
 
-qreal ThemeModel::GetWeatherBackgroundFirstColorPosition() const noexcept { return mWeatherBackgroundFirstColorPosition; }
-qreal ThemeModel::GetWeatherBackgroundSecondColorPosition() const noexcept { return mWeatherBackgroundSecondColorPosition; }
-qreal ThemeModel::GetWeatherBackgroundThirdColorPosition() const noexcept { return mWeatherBackgroundThirdColorPosition; }
+qreal ThemeConfigModel::GetWeatherBackgroundFirstColorPosition() const noexcept { return mWeatherBackgroundFirstColorPosition; }
+qreal ThemeConfigModel::GetWeatherBackgroundSecondColorPosition() const noexcept { return mWeatherBackgroundSecondColorPosition; }
+qreal ThemeConfigModel::GetWeatherBackgroundThirdColorPosition() const noexcept { return mWeatherBackgroundThirdColorPosition; }
 
-QSharedPointer<ThemeModel> ThemeModel::FromJSON(const QJsonObject& obj) 
+QSharedPointer<ThemeConfigModel> ThemeConfigModel::FromJSON(const QJsonObject& obj) 
 {
-    auto model{ QSharedPointer<ThemeModel>::create() };
+    auto model{ QSharedPointer<ThemeConfigModel>::create() };
     model->mThemeName = obj.value(QStringLiteral("ThemeName")).toString();
 
     model->mDailyForecastDayColor = obj.value(QStringLiteral("DailyForecastDayColor")).toString();

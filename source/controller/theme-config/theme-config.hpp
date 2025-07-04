@@ -29,35 +29,35 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
-#include <model/theme-model/theme-model.hpp>
+#include <model/theme-config/theme-config.hpp>
 
-class ThemeController : public QObject
+class ThemeConfigController : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(QObject* currentTheme READ GetCurrentTheme NOTIFY currentThemeChanged)
 
 public:
-    explicit ThemeController(QObject* parent = nullptr);
-    ~ThemeController() noexcept override = default;
+    explicit ThemeConfigController(QObject* parent = nullptr);
+    ~ThemeConfigController() noexcept override = default;
 
-    ThemeController(const ThemeController&) = delete;
-    ThemeController& operator=(const ThemeController&) = delete;
+    ThemeConfigController(const ThemeConfigController&) = delete;
+    ThemeConfigController& operator=(const ThemeConfigController&) = delete;
 
-    ThemeController(ThemeController&&) noexcept = delete;
-    ThemeController& operator=(ThemeController&&) noexcept = delete;
+    ThemeConfigController(ThemeConfigController&&) noexcept = delete;
+    ThemeConfigController& operator=(ThemeConfigController&&) noexcept = delete;
 
     void LoadThemes(const QString& path);
     
     QObject* GetCurrentTheme();
     Q_INVOKABLE void SetCurrentTheme(qsizetype index);
 
-    const QVector<QSharedPointer<ThemeModel>>& GetThemes() const noexcept;
+    const QVector<QSharedPointer<ThemeConfigModel>>& GetThemes() const noexcept;
 
 signals:
     void currentThemeChanged();
 
 private:
-    QVector<QSharedPointer<ThemeModel>> mThemes;
+    QVector<QSharedPointer<ThemeConfigModel>> mThemeConfigs;
     qsizetype mCurrentThemeIndex;
 };

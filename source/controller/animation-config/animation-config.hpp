@@ -20,14 +20,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "animation-speed-model.hpp"
+#pragma once
 
-int AnimationSpeedModel::GetThemeChangingDuration() const noexcept { return mThemeChangingDuration; }
+#include <QObject>
 
-QSharedPointer<AnimationSpeedModel> AnimationSpeedModel::FromJSON(const QJsonObject& obj) 
+#include <QJsonDocument>
+#include <QFile>
+
+#include <model/animation-config/animation-config.hpp>
+
+class AnimationConfigController : public QObject
 {
-    auto model{ QSharedPointer<AnimationSpeedModel>::create() };
+    Q_OBJECT 
 
-    model->mThemeChangingDuration = obj.value(QStringLiteral("ThemeChangingDuration")).toInt();
-    return model;
-}
+    Q_PROPERTY(QObject* animationConfig READ GetAnimationSpeed CONSTANT);
+
+public:
+    AnimationConfigController() = default;
+    ~AnimationConfigController() noexcept override = default;
+
+    AnimationConfigController(const AnimationConfigController&) = delete;
+    AnimationConfigController& operator=(const AnimationConfigController&) = delete;
+
+    AnimationConfigController(AnimationConfigController&&) = delete;
+    AnimationConfigController& operator=(AnimationConfigController&&) = delete;
+
+    void LoadAnimationSettings(const QString& path);
+    QObject* GetAnimationSpeed();
+
+private:
+    QSharedPointer<AnimationConfigModel> mAnimationSpeedModel;
+};

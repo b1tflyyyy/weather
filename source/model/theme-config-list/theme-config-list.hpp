@@ -25,9 +25,9 @@
 #include <QAbstractListModel>
 #include <QVector>
 
-#include <model/theme-model/theme-model.hpp>
+#include <model/theme-config/theme-config.hpp>
 
-class ThemeListModel : public QAbstractListModel
+class ThemeConfigListModel : public QAbstractListModel
 {
     Q_OBJECT
 
@@ -43,14 +43,14 @@ public:
         WeatherBackgroundThirdColorPosition
     };
 
-    explicit ThemeListModel(const QVector<QSharedPointer<ThemeModel>>& themes, QObject* parent = nullptr);
-    ~ThemeListModel() noexcept override = default;
+    explicit ThemeConfigListModel(const QVector<QSharedPointer<ThemeConfigModel>>& themes, QObject* parent = nullptr);
+    ~ThemeConfigListModel() noexcept override = default;
 
-    ThemeListModel(const ThemeListModel&) = delete;
-    ThemeListModel& operator=(const ThemeListModel&) = delete;
+    ThemeConfigListModel(const ThemeConfigListModel&) = delete;
+    ThemeConfigListModel& operator=(const ThemeConfigListModel&) = delete;
 
-    ThemeListModel(ThemeListModel&&) = delete;
-    ThemeListModel& operator=(ThemeListModel&&) = delete;
+    ThemeConfigListModel(ThemeConfigListModel&&) = delete;
+    ThemeConfigListModel& operator=(ThemeConfigListModel&&) = delete;
 
     int rowCount([[maybe_unused]] const QModelIndex& index) const override;
     QVariant data(const QModelIndex& index, int role) const override;
@@ -58,5 +58,5 @@ public:
     QHash<int, QByteArray> roleNames() const override;
 
 private:
-    const QVector<QSharedPointer<ThemeModel>>& mThemes;
+    const QVector<QSharedPointer<ThemeConfigModel>>& mThemes;
 };

@@ -27,25 +27,25 @@
 
 #include <QJsonObject>
 
-class AnimationSpeedModel : public QObject
+class AnimationConfigModel : public QObject
 {
     Q_OBJECT 
 
     Q_PROPERTY(int themeChangingDuration READ GetThemeChangingDuration CONSTANT);
 
 public:
-    AnimationSpeedModel() = default;
-    ~AnimationSpeedModel() noexcept override = default;
+    AnimationConfigModel() = default;
+    ~AnimationConfigModel() noexcept override = default;
 
-    AnimationSpeedModel(const AnimationSpeedModel&) = delete;
-    AnimationSpeedModel& operator=(const AnimationSpeedModel&) = delete;
+    AnimationConfigModel(const AnimationConfigModel&) = delete;
+    AnimationConfigModel& operator=(const AnimationConfigModel&) = delete;
 
-    AnimationSpeedModel(AnimationSpeedModel&&) = delete;
-    AnimationSpeedModel& operator=(AnimationSpeedModel&&) = delete;
+    AnimationConfigModel(AnimationConfigModel&&) = delete;
+    AnimationConfigModel& operator=(AnimationConfigModel&&) = delete;
 
     int GetThemeChangingDuration() const noexcept;
 
-    static QSharedPointer<AnimationSpeedModel> FromJSON(const QJsonObject& obj);
+    static QSharedPointer<AnimationConfigModel> FromJSON(const QJsonObject& obj);
 
 private:
     int mThemeChangingDuration;

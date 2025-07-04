@@ -30,7 +30,7 @@ enable_qt_autogen(${PROJECT_NAME})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE 
     qt6_lib
-    theme_controller_lib
-    theme_list_model_lib
-    animation_speed_manager_lib
+    theme_config_controller
+    theme_config_list_model
+    animation_config_controller
 )

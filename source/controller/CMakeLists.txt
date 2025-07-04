@@ -22,5 +22,5 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-add_subdirectory(theme-controller)
-add_subdirectory(animation-speed-controller)
+add_subdirectory(theme-config)
+add_subdirectory(animation-config)

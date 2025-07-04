@@ -20,9 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "animation-speed-controller.hpp"
+#include "animation-config.hpp"
 
-void AnimationSpeedController::LoadAnimationSettings(const QString& path)
+void AnimationConfigController::LoadAnimationSettings(const QString& path)
 {
     QFile file{ path };
     if (!file.open(QIODevice::ReadOnly))
@@ -41,7 +41,7 @@ void AnimationSpeedController::LoadAnimationSettings(const QString& path)
         throw std::runtime_error{ "failed to parse json" };
     }
 
-    mAnimationSpeedModel = AnimationSpeedModel::FromJSON(doc.object());
+    mAnimationSpeedModel = AnimationConfigModel::FromJSON(doc.object());
 }
 
-QObject* AnimationSpeedController::GetAnimationSpeed() { return mAnimationSpeedModel.data(); }
+QObject* AnimationConfigController::GetAnimationSpeed() { return mAnimationSpeedModel.data(); }

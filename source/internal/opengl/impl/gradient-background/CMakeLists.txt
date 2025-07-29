@@ -22,18 +22,7 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-set(LIB_NAME qt6_lib)
+set(LIB_NAME opengl_gradient_background)
 
-find_package(Qt6 COMPONENTS Core Gui Qml OpenGLWidgets Quick QuickWidgets Widgets REQUIRED)
-
-add_library(${LIB_NAME} INTERFACE)
-target_link_libraries(${LIB_NAME} INTERFACE
-    Qt6::Core
-    Qt6::Gui
-    Qt6::Qml
-    Qt6::OpenGLWidgets
-    Qt6::Quick
-    Qt6::QuickWidgets
-    Qt6::Widgets
-    OpenGL::GL
-)
+add_library(${LIB_NAME} STATIC gradient-background.hpp gradient-background.cpp)
+target_link_libraries(${LIB_NAME} PUBLIC qt6_lib shader_loader)

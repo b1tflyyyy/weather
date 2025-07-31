@@ -22,16 +22,7 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-set(SOURCES main.cpp)
-set(QML_SOURCES ${CMAKE_SOURCE_DIR}/ui/qml.qrc)
+set(LIB_NAME shader_loader)
 
-add_executable(${PROJECT_NAME} ${SOURCES} ${QML_SOURCES})
-enable_qt_autogen(${PROJECT_NAME})
-
-target_link_libraries(${PROJECT_NAME} PRIVATE 
-    qt6_lib
-    theme_config_controller
-    theme_config_list_model
-    animation_config_controller
-    qml_gradient_background
-)
+add_library(${LIB_NAME} STATIC shader-loader.hpp shader-loader.cpp)
+target_link_libraries(${LIB_NAME} PUBLIC qt6_lib)

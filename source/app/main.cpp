@@ -23,6 +23,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QSurfaceFormat>
 
 #include <model/animation-config/animation-config.hpp>
 #include <model/theme-config/theme-config.hpp>
@@ -31,10 +32,15 @@
 #include <controller/theme-config/theme-config.hpp>
 #include <controller/animation-config/animation-config.hpp>
 
+#include <internal/opengl/qml/gradient-background/gradient-background.hpp>
+
 static void RegisterQMLTypes();
+static void SetupFormat();
 
 int main(int argc, char** argv)
 {
+    SetupFormat();
+
     ThemeConfigController theme_config_controller{};
     AnimationConfigController animation_config_controller{};
 
@@ -71,4 +77,20 @@ void RegisterQMLTypes()
 {
     qmlRegisterUncreatableType<ThemeConfigModel>("ThemeConfigModel", 1, 0, "ThemeConfigModel", "");
     qmlRegisterUncreatableType<AnimationConfigModel>("AnimationConfigModel", 1, 0, "AnimationConfigModel", "");
+
+    qmlRegisterType<GradientBackgroundQml>("GradientBackground", 1, 0, "GBack");
+}
+
+void SetupFormat()
+{
+    QSurfaceFormat fmt{};
+    fmt.setSwapInterval(1);
+    fmt.setRenderableType(QSurfaceFormat::OpenGL);
+    fmt.setProfile(QSurfaceFormat::CoreProfile);
+    fmt.setVersion(4, 5);
+    fmt.setRedBufferSize(16);
+    fmt.setGreenBufferSize(16);
+    fmt.setBlueBufferSize(16);
+    
+    QSurfaceFormat::setDefaultFormat(fmt);
 }

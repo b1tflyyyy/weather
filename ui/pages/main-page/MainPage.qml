@@ -28,6 +28,8 @@ import "../settings-page"
 import "components/daily-forecast-panel"
 import "components/hourly-forecast-panel"
 
+import GradientBackground 1.0
+
 Rectangle {
     id: _mainPage
 
@@ -58,6 +60,12 @@ Rectangle {
         }
     }
 
+    GBack {
+        id: _gradientBackground
+        anchors.fill: parent
+    }
+
+    /*
     gradient: Gradient {
         orientation: Gradient.Horizontal
 
@@ -76,6 +84,7 @@ Rectangle {
             color: thirdColor
         }
     }
+    */
 
     DailyForecastPanel {
         id: _forecastPanel

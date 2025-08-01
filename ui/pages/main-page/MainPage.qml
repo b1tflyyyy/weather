@@ -28,63 +28,46 @@ import "../settings-page"
 import "components/daily-forecast-panel"
 import "components/hourly-forecast-panel"
 
-import GradientBackground 1.0
+import GradientBackgroundOpenGL 1.0
 
 Rectangle {
     id: _mainPage
 
-    property color firstColor: themeConfigController.currentTheme.weatherBackgroundFirstColor
-    property color secondColor: themeConfigController.currentTheme.weatherBackgroundSecondColor
-    property color thirdColor: themeConfigController.currentTheme.weatherBackgroundThirdColor
+    property color firstBackgroundGradientColor: themeConfigController.currentTheme.weatherBackgroundFirstGradientColor
+    property color secondBackgroundGradientColor: themeConfigController.currentTheme.weatherBackgroundSecondGradientColor
+    property color thirdBackgroundGradientColor: themeConfigController.currentTheme.weatherBackgroundThirdGradientColor
 
     readonly property int themeChangingDuration: animationConfigController.animationConfig.themeChangingDuration
-
-    Behavior on firstColor {
+    
+    Behavior on firstBackgroundGradientColor {
         ColorAnimation {
             duration: themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
-    Behavior on secondColor {
+    Behavior on secondBackgroundGradientColor {
         ColorAnimation {
             duration: themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
-    Behavior on thirdColor {
+    Behavior on thirdBackgroundGradientColor {
         ColorAnimation {
             duration: themeChangingDuration
             easing.type: Easing.InQuint 
         }
     }
 
-    GBack {
+    GradientBackground {
         id: _gradientBackground
         anchors.fill: parent
+
+        firstGradientColor: Qt.vector3d(firstBackgroundGradientColor.r, firstBackgroundGradientColor.g, firstBackgroundGradientColor.b)
+        secondGradientColor: Qt.vector3d(secondBackgroundGradientColor.r, secondBackgroundGradientColor.g, secondBackgroundGradientColor.b)
+        thirdGradientColor: Qt.vector3d(thirdBackgroundGradientColor.r, thirdBackgroundGradientColor.g, thirdBackgroundGradientColor.b)
     }
-
-    /*
-    gradient: Gradient {
-        orientation: Gradient.Horizontal
-
-        GradientStop {
-            position: themeConfigController.currentTheme.weatherBackgroundFirstColorPosition
-            color:  firstColor 
-        }
-
-        GradientStop {
-            position: themeConfigController.currentTheme.weatherBackgroundSecondColorPosition
-            color: secondColor
-        }
-
-        GradientStop {
-            position: themeConfigController.currentTheme.weatherBackgroundThirdColorPosition
-            color: thirdColor
-        }
-    }
-    */
 
     DailyForecastPanel {
         id: _forecastPanel

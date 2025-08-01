@@ -78,7 +78,7 @@ void RegisterQMLTypes()
     qmlRegisterUncreatableType<ThemeConfigModel>("ThemeConfigModel", 1, 0, "ThemeConfigModel", "");
     qmlRegisterUncreatableType<AnimationConfigModel>("AnimationConfigModel", 1, 0, "AnimationConfigModel", "");
 
-    qmlRegisterType<GradientBackgroundQml>("GradientBackground", 1, 0, "GBack");
+    qmlRegisterType<GradientBackgroundQml>("GradientBackgroundOpenGL", 1, 0, "GradientBackground");
 }
 
 void SetupFormat()

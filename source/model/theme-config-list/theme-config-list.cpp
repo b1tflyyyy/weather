@@ -35,12 +35,12 @@ QVariant ThemeConfigListModel::data(const QModelIndex& index, int role) const
     switch (role) 
     {
         case ThemeConfigListModel::Roles::ThemeName: return el->GetThemeName(); 
-        case ThemeConfigListModel::Roles::WeatherBackgroundFirstColor: return el->GetWeatherBackgroundFirstColor();
-        case ThemeConfigListModel::Roles::WeatherBackgroundSecondColor: return el->GetWeatherBackgroundSecondColor();
-        case ThemeConfigListModel::Roles::WeatherBackgroundThirdColor: return el->GetWeatherBackgroundThirdColor();
-        case ThemeConfigListModel::Roles::WeatherBackgroundFirstColorPosition: return el->GetWeatherBackgroundFirstColorPosition();
-        case ThemeConfigListModel::Roles::WeatherBackgroundSecondColorPosition: return el->GetWeatherBackgroundSecondColorPosition();
-        case ThemeConfigListModel::Roles::WeatherBackgroundThirdColorPosition: return el->GetWeatherBackgroundThirdColorPosition();
+        case ThemeConfigListModel::Roles::WeatherBackgroundFirstColor: return el->GetWeatherBackgroundFirstGradientColor();
+        case ThemeConfigListModel::Roles::WeatherBackgroundSecondColor: return el->GetWeatherBackgroundSecondGradientColor();
+        case ThemeConfigListModel::Roles::WeatherBackgroundThirdColor: return el->GetWeatherBackgroundThirdGradientColor();
+        case ThemeConfigListModel::Roles::WeatherBackgroundFirstColorPosition: return 0.3f;  // gradient position in qml, maybe refactor this
+        case ThemeConfigListModel::Roles::WeatherBackgroundSecondColorPosition: return 0.6f; // gradient position in qml, maybe refactor this
+        case ThemeConfigListModel::Roles::WeatherBackgroundThirdColorPosition: return 0.9f;  // gradient position in qml, maybe refactor this
         default: return {};
     }
 }

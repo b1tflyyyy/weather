@@ -35,13 +35,9 @@ QColor ThemeConfigModel::GetHourlyForecastDegreesColor() const noexcept { return
 QColor ThemeConfigModel::GetHourlyForecastTimeColor() const noexcept { return mHourlyForecastTimeColor; }
 QColor ThemeConfigModel::GetHourlyForecastCardColor() const noexcept { return mHourlyForecastCardColor; }
 
-QColor ThemeConfigModel::GetWeatherBackgroundFirstColor() const noexcept { return mWeatherBackgroundFirstColor; }
-QColor ThemeConfigModel::GetWeatherBackgroundSecondColor() const noexcept { return mWeatherBackgroundSecondColor; }
-QColor ThemeConfigModel::GetWeatherBackgroundThirdColor() const noexcept { return mWeatherBackgroundThirdColor; }
-
-qreal ThemeConfigModel::GetWeatherBackgroundFirstColorPosition() const noexcept { return mWeatherBackgroundFirstColorPosition; }
-qreal ThemeConfigModel::GetWeatherBackgroundSecondColorPosition() const noexcept { return mWeatherBackgroundSecondColorPosition; }
-qreal ThemeConfigModel::GetWeatherBackgroundThirdColorPosition() const noexcept { return mWeatherBackgroundThirdColorPosition; }
+QColor ThemeConfigModel::GetWeatherBackgroundFirstGradientColor() const noexcept { return mWeatherBackgroundFirstGradientColor; }
+QColor ThemeConfigModel::GetWeatherBackgroundSecondGradientColor() const noexcept { return mWeatherBackgroundSecondGradientColor; }
+QColor ThemeConfigModel::GetWeatherBackgroundThirdGradientColor() const noexcept { return mWeatherBackgroundThirdGradientColor; }
 
 QSharedPointer<ThemeConfigModel> ThemeConfigModel::FromJSON(const QJsonObject& obj) 
 {
@@ -59,13 +55,9 @@ QSharedPointer<ThemeConfigModel> ThemeConfigModel::FromJSON(const QJsonObject& o
     model->mHourlyForecastTimeColor = obj.value(QStringLiteral("HourlyForecastTimeColor")).toString();
     model->mHourlyForecastCardColor = obj.value(QStringLiteral("HourlyForecastCardColor")).toString();
 
-    model->mWeatherBackgroundFirstColor = obj.value(QStringLiteral("WeatherBackgroundFirstColor")).toString();
-    model->mWeatherBackgroundSecondColor = obj.value(QStringLiteral("WeatherBackgroundSecondColor")).toString();
-    model->mWeatherBackgroundThirdColor = obj.value(QStringLiteral("WeatherBackgroundThirdColor")).toString();
-
-    model->mWeatherBackgroundFirstColorPosition = obj.value(QStringLiteral("WeatherBackgroundFirstColorPosition")).toDouble();
-    model->mWeatherBackgroundSecondColorPosition = obj.value(QStringLiteral("WeatherBackgroundSecondColorPosition")).toDouble();
-    model->mWeatherBackgroundThirdColorPosition = obj.value(QStringLiteral("WeatherBackgroundThirdColorPosition")).toDouble();
+    model->mWeatherBackgroundFirstGradientColor = obj.value(QStringLiteral("WeatherBackgroundFirstGradientColor")).toString();
+    model->mWeatherBackgroundSecondGradientColor = obj.value(QStringLiteral("WeatherBackgroundSecondGradientColor")).toString();
+    model->mWeatherBackgroundThirdGradientColor = obj.value(QStringLiteral("WeatherBackgroundThirdGradientColor")).toString();
 
     return model;
 }

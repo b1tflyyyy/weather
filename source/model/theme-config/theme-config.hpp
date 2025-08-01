@@ -28,6 +28,7 @@
 #include <QJsonObject>
 
 #include <QSharedPointer>
+#include <QVector3D>
 
 class ThemeConfigModel : public QObject
 {
@@ -46,13 +47,9 @@ class ThemeConfigModel : public QObject
     Q_PROPERTY(QColor hourlyForecastTimeColor READ GetHourlyForecastTimeColor CONSTANT);
     Q_PROPERTY(QColor hourlyForecastCardColor READ GetHourlyForecastCardColor CONSTANT);
 
-    Q_PROPERTY(QColor weatherBackgroundFirstColor READ GetWeatherBackgroundFirstColor CONSTANT);
-    Q_PROPERTY(QColor weatherBackgroundSecondColor READ GetWeatherBackgroundSecondColor CONSTANT);
-    Q_PROPERTY(QColor weatherBackgroundThirdColor READ GetWeatherBackgroundThirdColor CONSTANT);
-
-    Q_PROPERTY(qreal weatherBackgroundFirstColorPosition READ GetWeatherBackgroundFirstColorPosition CONSTANT);
-    Q_PROPERTY(qreal weatherBackgroundSecondColorPosition READ GetWeatherBackgroundSecondColorPosition CONSTANT);
-    Q_PROPERTY(qreal weatherBackgroundThirdColorPosition READ GetWeatherBackgroundThirdColorPosition CONSTANT);
+    Q_PROPERTY(QColor weatherBackgroundFirstGradientColor READ GetWeatherBackgroundFirstGradientColor CONSTANT);
+    Q_PROPERTY(QColor weatherBackgroundSecondGradientColor READ GetWeatherBackgroundSecondGradientColor CONSTANT);
+    Q_PROPERTY(QColor weatherBackgroundThirdGradientColor READ GetWeatherBackgroundThirdGradientColor CONSTANT);
 
 public: 
     ThemeConfigModel() = default;
@@ -77,13 +74,9 @@ public:
     QColor GetHourlyForecastTimeColor() const noexcept;
     QColor GetHourlyForecastCardColor() const noexcept;
 
-    QColor GetWeatherBackgroundFirstColor() const noexcept;
-    QColor GetWeatherBackgroundSecondColor() const noexcept;
-    QColor GetWeatherBackgroundThirdColor() const noexcept;
-
-    qreal GetWeatherBackgroundFirstColorPosition() const noexcept;
-    qreal GetWeatherBackgroundSecondColorPosition() const noexcept;
-    qreal GetWeatherBackgroundThirdColorPosition() const noexcept;
+    QColor GetWeatherBackgroundFirstGradientColor() const noexcept;
+    QColor GetWeatherBackgroundSecondGradientColor() const noexcept;
+    QColor GetWeatherBackgroundThirdGradientColor() const noexcept;
 
     static QSharedPointer<ThemeConfigModel> FromJSON(const QJsonObject& obj);
 
@@ -104,12 +97,8 @@ private:
     QColor mHourlyForecastTimeColor;
     QColor mHourlyForecastCardColor;
 
-    // Weather Background Gradient
-    QColor mWeatherBackgroundFirstColor;
-    QColor mWeatherBackgroundSecondColor;
-    QColor mWeatherBackgroundThirdColor;
-
-    qreal mWeatherBackgroundFirstColorPosition;
-    qreal mWeatherBackgroundSecondColorPosition;
-    qreal mWeatherBackgroundThirdColorPosition;
+    // Background Gradient Color
+    QColor mWeatherBackgroundFirstGradientColor;
+    QColor mWeatherBackgroundSecondGradientColor;
+    QColor mWeatherBackgroundThirdGradientColor;
 };

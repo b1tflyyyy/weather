@@ -30,6 +30,29 @@ class GradientBackgroundQml : public QQuickFramebufferObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(QVector3D firstGradientColor READ GetFirstGradientColor WRITE SetFirstGradientColor NOTIFY firstColorChanged);
+    Q_PROPERTY(QVector3D secondGradientColor READ GetSecondGradientColor WRITE SetSecondGradientColor NOTIFY secondColorChanged);
+    Q_PROPERTY(QVector3D thirdGradientColor READ GetThirdGradientColor WRITE SetThirdGradientColor NOTIFY thirdColorChanged);
+
 public:
+    GradientBackgroundQml();
     Renderer* createRenderer() const override;
+
+    void SetFirstGradientColor(const QVector3D& value);
+    void SetSecondGradientColor(const QVector3D& value);
+    void SetThirdGradientColor(const QVector3D& value);
+
+    const QVector3D& GetFirstGradientColor() const noexcept;
+    const QVector3D& GetSecondGradientColor() const noexcept;
+    const QVector3D& GetThirdGradientColor() const noexcept;
+
+signals:
+    void firstColorChanged();
+    void secondColorChanged();
+    void thirdColorChanged();
+
+private:
+    QVector3D mFirstGradientColor;
+    QVector3D mSecondGradientColor;
+    QVector3D mThirdGradientColor;
 };

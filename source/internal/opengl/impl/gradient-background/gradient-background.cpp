@@ -67,6 +67,19 @@ QOpenGLFramebufferObject* GradientBackgroundImpl::createFramebufferObject(const 
     return new QOpenGLFramebufferObject{ size, format };
 }
 
+void GradientBackgroundImpl::synchronize(QQuickFramebufferObject* fbo)
+{
+    auto* obj{ dynamic_cast<GradientBackgroundQml*>(fbo) };
+
+    mShaderProgram.bind();
+
+    mShaderProgram.setUniformValue("u_Color_1", obj->GetFirstGradientColor());
+    mShaderProgram.setUniformValue("u_Color_2", obj->GetSecondGradientColor());
+    mShaderProgram.setUniformValue("u_Color_3", obj->GetThirdGradientColor());
+
+    mShaderProgram.release();
+}
+
 void GradientBackgroundImpl::InitShaders()
 {
     // TODO: remove hardcoded path ...

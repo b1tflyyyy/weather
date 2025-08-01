@@ -22,7 +22,48 @@
 
 #include "gradient-background.hpp"
 
+GradientBackgroundQml::GradientBackgroundQml()
+    : QQuickFramebufferObject{}
+{ }
+
 GradientBackgroundQml::Renderer* GradientBackgroundQml::createRenderer() const
 {
     return new GradientBackgroundImpl{};
 } 
+
+void GradientBackgroundQml::SetFirstGradientColor(const QVector3D& value)
+{
+    if (mFirstGradientColor != value)
+    {
+        mFirstGradientColor = value;
+        emit firstColorChanged();
+
+        update();
+    }
+}
+
+void GradientBackgroundQml::SetSecondGradientColor(const QVector3D& value)
+{
+    if (mSecondGradientColor != value)
+    {
+        mSecondGradientColor = value;
+        emit secondColorChanged();
+    
+        update();
+    }
+}
+
+void GradientBackgroundQml::SetThirdGradientColor(const QVector3D& value)
+{
+    if (mThirdGradientColor != value)
+    {
+        mThirdGradientColor = value;
+        emit thirdColorChanged();
+
+        update();
+    }
+}   
+
+const QVector3D& GradientBackgroundQml::GetFirstGradientColor() const noexcept { return mFirstGradientColor; }
+const QVector3D& GradientBackgroundQml::GetSecondGradientColor() const noexcept { return mSecondGradientColor; }
+const QVector3D& GradientBackgroundQml::GetThirdGradientColor() const noexcept { return mThirdGradientColor; }

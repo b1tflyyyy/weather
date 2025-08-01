@@ -28,6 +28,7 @@
 #include <QOpenGLShaderProgram>
 
 #include <internal/opengl/utils/shader-loader/shader-loader.hpp>
+#include <internal/opengl/qml/gradient-background/gradient-background.hpp>
 
 class GradientBackgroundImpl : public QQuickFramebufferObject::Renderer, protected QOpenGLFunctions_4_5_Core
 {
@@ -37,6 +38,8 @@ public:
 
     void render() override;
     QOpenGLFramebufferObject* createFramebufferObject(const QSize& size) override;
+
+    void synchronize(QQuickFramebufferObject* fbo) override;
 
 private:
     void InitShaders();

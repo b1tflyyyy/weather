@@ -22,7 +22,13 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-add_subdirectory(theme-config)
-add_subdirectory(theme-config-list)
-add_subdirectory(animation-config)
-add_subdirectory(user-config)
+set(LIB_NAME user_config_controller)
+
+add_library(${LIB_NAME} user-config.hpp user-config.cpp)
+enable_qt_autogen(${LIB_NAME})
+
+target_link_libraries(${LIB_NAME} PUBLIC
+    qt6_lib
+    user_config_model 
+    logger
+)

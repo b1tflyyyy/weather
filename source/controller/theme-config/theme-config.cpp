@@ -22,11 +22,6 @@
 
 #include "theme-config.hpp"
 
-ThemeConfigController::ThemeConfigController(QObject* parent)
-    : QObject{ parent }
-    , mCurrentThemeIndex{}
-{ }
-
 void ThemeConfigController::LoadThemes(const QString& path)
 {
     DEFAULT_LOGGER_INFO("Loading themes: \"{}\"", path.toStdString());
@@ -67,11 +62,11 @@ void ThemeConfigController::LoadThemes(const QString& path)
 
 QObject* ThemeConfigController::GetCurrentTheme() { return mThemeConfigs[mCurrentThemeIndex].data(); }
 
-void ThemeConfigController::SetCurrentTheme(qsizetype index)
+void ThemeConfigController::SetCurrentTheme(std::size_t index)
 {
     if (mCurrentThemeIndex != index)
     {
-        mCurrentThemeIndex = index;
+        mCurrentThemeIndex = (static_cast<qsizetype>(index) >= mThemeConfigs.size() ? 0 : index);
         emit currentThemeChanged();
     }
 }

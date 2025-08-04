@@ -43,7 +43,7 @@ class ThemeConfigController : public QObject
     Q_PROPERTY(QObject* currentTheme READ GetCurrentTheme NOTIFY currentThemeChanged)
 
 public:
-    explicit ThemeConfigController(QObject* parent = nullptr);
+    ThemeConfigController() = default;
     ~ThemeConfigController() noexcept override = default;
 
     ThemeConfigController(const ThemeConfigController&) = delete;
@@ -55,7 +55,7 @@ public:
     void LoadThemes(const QString& path);
     
     QObject* GetCurrentTheme();
-    Q_INVOKABLE void SetCurrentTheme(qsizetype index);
+    Q_INVOKABLE void SetCurrentTheme(std::size_t index);
 
     const QVector<QSharedPointer<ThemeConfigModel>>& GetThemes() const noexcept;
 
@@ -64,5 +64,5 @@ signals:
 
 private:
     QVector<QSharedPointer<ThemeConfigModel>> mThemeConfigs;
-    qsizetype mCurrentThemeIndex;
+    std::size_t mCurrentThemeIndex;
 };

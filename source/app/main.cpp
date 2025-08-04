@@ -30,9 +30,11 @@
 #include <model/animation-config/animation-config.hpp>
 #include <model/theme-config/theme-config.hpp>
 #include <model/theme-config-list/theme-config-list.hpp>
+#include <model/user-config/user-config.hpp>
 
 #include <controller/theme-config/theme-config.hpp>
 #include <controller/animation-config/animation-config.hpp>
+#include <controller/user-config/user-config.hpp>
 
 #include <internal/opengl/qml/gradient-background/gradient-background.hpp>
 
@@ -51,11 +53,13 @@ int main(int argc, char** argv)
 
     ThemeConfigController theme_config_controller{};
     AnimationConfigController animation_config_controller{};
+    UserConfigController user_config_controller{ QStringLiteral("user_config.json") };
 
     try 
     {
         theme_config_controller.LoadThemes(QStringLiteral("themes.json"));
         animation_config_controller.LoadAnimationSettings(QStringLiteral("animation_settings.json"));
+        user_config_controller.LoadUserConfig();
     }
     catch (const std::runtime_error& e)
     {
@@ -77,6 +81,9 @@ int main(int argc, char** argv)
         return -1;
     }
 
+    auto* user_config_model{ dynamic_cast<UserConfigModel*>(user_config_controller.GetUserConfig()) };
+    theme_config_controller.SetCurrentTheme(user_config_model->GetThemeIndex());
+
     ThemeConfigListModel theme_config_list_model{ theme_config_controller.GetThemes() };
 
     QQmlApplicationEngine engine{};
@@ -84,7 +91,8 @@ int main(int argc, char** argv)
     
     ctx->setContextProperty(QStringLiteral("themeConfigController"), &theme_config_controller);
     ctx->setContextProperty(QStringLiteral("themeConfigListModel"), &theme_config_list_model);
-    ctx->setContextProperty(QStringLiteral("animationConfigController"),  &animation_config_controller);
+    ctx->setContextProperty(QStringLiteral("animationConfigController"), &animation_config_controller);
+    ctx->setContextProperty(QStringLiteral("userConfigController"), &user_config_controller);
 
     RegisterQMLTypes();
 
@@ -98,6 +106,7 @@ void RegisterQMLTypes()
 {
     qmlRegisterUncreatableType<ThemeConfigModel>("ThemeConfigModel", 1, 0, "ThemeConfigModel", "");
     qmlRegisterUncreatableType<AnimationConfigModel>("AnimationConfigModel", 1, 0, "AnimationConfigModel", "");
+    qmlRegisterUncreatableType<UserConfigModel>("UserConfigModel", 1, 0, "UserConfigModel", "");
 
     qmlRegisterType<GradientBackgroundQml>("GradientBackgroundOpenGL", 1, 0, "GradientBackground");
 }

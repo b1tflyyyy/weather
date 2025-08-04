@@ -34,5 +34,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     theme_config_list_model
     animation_config_controller
     qml_gradient_background
+    user_config_model 
+    user_config_controller
     logger
 )

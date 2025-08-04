@@ -27,7 +27,11 @@ QString ShaderLoader::LoadShader(const QString& path)
     QFile f{ path };
     if (!f.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << "error opening the file: " << path;
+        DEFAULT_LOGGER_COLOR_CRITICAL(Logger::Tc::red,
+                                      Logger::Tc::white,
+                                      Logger::Emp::bold,
+                                      "Error: failed to load shader: \"{}\"", path.toStdString());
+
         return {};
     }
 
@@ -40,6 +44,6 @@ QString ShaderLoader::LoadShader(const QString& path)
         shader += '\n';
     }
     
-    qDebug() << shader;
+    DEFAULT_LOGGER_INFO("Shader {} loaded successfully", path.toStdString());
     return shader;
 }

@@ -35,7 +35,7 @@ class GradientBackgroundQml : public QQuickFramebufferObject
     Q_PROPERTY(QVector3D thirdGradientColor READ GetThirdGradientColor WRITE SetThirdGradientColor NOTIFY thirdColorChanged);
 
 public:
-    GradientBackgroundQml();
+    GradientBackgroundQml() = default;
     Renderer* createRenderer() const override;
 
     void SetFirstGradientColor(const QVector3D& value);

@@ -20,10 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QSurfaceFormat>
+
+#include <QMessageBox>
 
 #include <model/animation-config/animation-config.hpp>
 #include <model/theme-config/theme-config.hpp>
@@ -34,12 +36,18 @@
 
 #include <internal/opengl/qml/gradient-background/gradient-background.hpp>
 
+#include <utils/logger/logger.hpp>
+
 static void RegisterQMLTypes();
 static void SetupFormat();
 
 int main(int argc, char** argv)
 {
+    DEFAULT_LOGGER_INIT();
+    DEFAULT_LOGGER_INFO("Application started...");
+
     SetupFormat();
+    QApplication app{ argc, argv };
 
     ThemeConfigController theme_config_controller{};
     AnimationConfigController animation_config_controller{};
@@ -51,14 +59,27 @@ int main(int argc, char** argv)
     }
     catch (const std::runtime_error& e)
     {
-        qDebug() << e.what() << '\n';
+        const std::string& error_message{ std::format("Error: {}", e.what()) };
+
+        DEFAULT_LOGGER_COLOR_CRITICAL(Logger::Tc::red,
+                                      Logger::Tc::white,
+                                      Logger::Emp::bold, 
+                                      "{}", error_message.c_str());
+
+        QMessageBox message_box{};
+        message_box.setWindowTitle(QStringLiteral("Critical Error"));
+        message_box.setText(QString{ error_message.c_str() });
+        message_box.setDefaultButton(QMessageBox::Ok);
+        message_box.setIcon(QMessageBox::Critical);
+        
+        message_box.exec();
+        
+        return -1;
     }
 
     ThemeConfigListModel theme_config_list_model{ theme_config_controller.GetThemes() };
 
-    QGuiApplication app{ argc, argv };
     QQmlApplicationEngine engine{};
-
     auto* ctx{ engine.rootContext() };
     
     ctx->setContextProperty(QStringLiteral("themeConfigController"), &theme_config_controller);
@@ -70,7 +91,7 @@ int main(int argc, char** argv)
     const QUrl& url{ QStringLiteral("qrc:/main-window/MainWindow.qml") };
     engine.load(url);
 
-    return QGuiApplication::exec();
+    return QApplication::exec();
 }
 
 void RegisterQMLTypes()
@@ -88,9 +109,6 @@ void SetupFormat()
     fmt.setRenderableType(QSurfaceFormat::OpenGL);
     fmt.setProfile(QSurfaceFormat::CoreProfile);
     fmt.setVersion(4, 5);
-    fmt.setRedBufferSize(16);
-    fmt.setGreenBufferSize(16);
-    fmt.setBlueBufferSize(16);
     
     QSurfaceFormat::setDefaultFormat(fmt);
 }

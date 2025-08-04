@@ -22,10 +22,6 @@
 
 #include "gradient-background.hpp"
 
-GradientBackgroundQml::GradientBackgroundQml()
-    : QQuickFramebufferObject{}
-{ }
-
 GradientBackgroundQml::Renderer* GradientBackgroundQml::createRenderer() const
 {
     return new GradientBackgroundImpl{};

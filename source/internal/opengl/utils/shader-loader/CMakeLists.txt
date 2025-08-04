@@ -25,4 +25,7 @@ cmake_minimum_required(VERSION 3.28)
 set(LIB_NAME shader_loader)
 
 add_library(${LIB_NAME} STATIC shader-loader.hpp shader-loader.cpp)
-target_link_libraries(${LIB_NAME} PUBLIC qt6_lib)
+target_link_libraries(${LIB_NAME} PUBLIC 
+    logger    
+    qt6_lib
+)

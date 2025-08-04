@@ -25,7 +25,7 @@
 #include <QFile>
 #include <QTextStream>
 
-#include <QDebug>
+#include <utils/logger/logger.hpp>
 
 class ShaderLoader
 {

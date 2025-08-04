@@ -30,6 +30,8 @@
 #include <internal/opengl/utils/shader-loader/shader-loader.hpp>
 #include <internal/opengl/qml/gradient-background/gradient-background.hpp>
 
+#include <utils/logger/logger.hpp>
+
 class GradientBackgroundImpl : public QQuickFramebufferObject::Renderer, protected QOpenGLFunctions_4_5_Core
 {
 public:
@@ -44,6 +46,9 @@ public:
 private:
     void InitShaders();
     void InitGeometry();
+
+    bool RegisterShader(QOpenGLShader::ShaderType type, const QString& source);
+    static std::string_view GetShaderTypeString(QOpenGLShader::ShaderType type);
 
 private:
     QOpenGLShaderProgram mShaderProgram;

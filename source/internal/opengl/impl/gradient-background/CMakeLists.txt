@@ -25,4 +25,8 @@ cmake_minimum_required(VERSION 3.28)
 set(LIB_NAME opengl_gradient_background)
 
 add_library(${LIB_NAME} STATIC gradient-background.hpp gradient-background.cpp)
-target_link_libraries(${LIB_NAME} PUBLIC qt6_lib shader_loader)
+target_link_libraries(${LIB_NAME} PUBLIC 
+    qt6_lib 
+    shader_loader
+    logger
+)

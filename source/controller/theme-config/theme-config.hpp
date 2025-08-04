@@ -22,6 +22,9 @@
 
 #pragma once
 
+#include <format>
+#include <iomanip>
+
 #include <QObject>
 #include <QVector>
 #include <QString>
@@ -30,6 +33,8 @@
 #include <QJsonArray>
 
 #include <model/theme-config/theme-config.hpp>
+
+#include <utils/logger/logger.hpp>
 
 class ThemeConfigController : public QObject
 {

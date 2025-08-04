@@ -27,4 +27,8 @@ set(LIB_NAME theme_config_controller)
 add_library(${LIB_NAME} theme-config.hpp theme-config.cpp)
 enable_qt_autogen(${LIB_NAME})
 
-target_link_libraries(${LIB_NAME} PUBLIC qt6_lib theme_config_model)
+target_link_libraries(${LIB_NAME} PUBLIC
+    qt6_lib 
+    theme_config_model
+    logger    
+)

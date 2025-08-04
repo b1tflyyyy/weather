@@ -29,6 +29,8 @@
 
 #include <model/animation-config/animation-config.hpp>
 
+#include <utils/logger/logger.hpp>
+
 class AnimationConfigController : public QObject
 {
     Q_OBJECT 

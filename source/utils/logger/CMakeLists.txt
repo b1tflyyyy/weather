@@ -22,8 +22,7 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-add_subdirectory(app)
-add_subdirectory(model)
-add_subdirectory(controller)
-add_subdirectory(internal)
-add_subdirectory(utils)
+set(LIB_NAME logger)
+
+add_library(${LIB_NAME} STATIC logger.hpp logger.cpp)
+target_link_libraries(${LIB_NAME} PUBLIC spdlog_header_only)

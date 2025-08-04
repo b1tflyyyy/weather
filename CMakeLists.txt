@@ -48,6 +48,18 @@ include(QtAutoGeneration)
 # -----------------------------------------------------------------------
 include_directories(source)
 
+# Custom options
+# -----------------------------------------------------------------------
+option(ENABLE_LOGS "Enable debug logs" ON)
+
+if (ENABLE_LOGS)
+    add_compile_definitions(ENABLE_LOGS)
+endif()
+
+# Print custom options
+# -----------------------------------------------------------------------
+message(STATUS "Enable logs: ${ENABLE_LOGS}")
+
 # Sub dirs ...
 # -----------------------------------------------------------------------
 add_subdirectory(source)

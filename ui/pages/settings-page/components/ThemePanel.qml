@@ -87,6 +87,9 @@ ListView {
 
             onClicked: function (mouse) {
                 themeConfigController.SetCurrentTheme(index)
+                
+                userConfigController.userConfig.themeIndex = index
+                userConfigController.SaveUserConfig()
             }
         }
     }

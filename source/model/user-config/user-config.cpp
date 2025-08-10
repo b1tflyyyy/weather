@@ -22,6 +22,14 @@
 
 #include "user-config.hpp"
 
+void swap(UserConfigModel& lhs, UserConfigModel& rhs) noexcept
+{
+    using std::swap;
+
+    swap(lhs.mCity, rhs.mCity);
+    swap(lhs.mThemeIndex, rhs.mThemeIndex);
+}
+
 const QString& UserConfigModel::GetCity() const noexcept { return mCity; }
 
 std::size_t UserConfigModel::GetThemeIndex() const noexcept { return mThemeIndex; }
@@ -31,22 +39,22 @@ void UserConfigModel::SetThemeIndex(std::size_t idx)
     mThemeIndex = idx;    
 }
 
-QSharedPointer<UserConfigModel> UserConfigModel::FromJSON(const QJsonObject& obj)
+void UserConfigModel::FromJson(const QJsonObject& json)
 {
-    auto model{ QSharedPointer<UserConfigModel>::create() };
+    UserConfigModel copy{};
 
-    model->mCity = obj.value(QStringLiteral("City")).toString();
-    model->mThemeIndex = static_cast<std::size_t>(obj.value(QStringLiteral("ThemeIndex")).toInteger());
+    copy.mCity = json.value(QStringLiteral("City")).toString();
+    copy.mThemeIndex = static_cast<std::size_t>(json.value(QStringLiteral("ThemeIndex")).toInteger());
 
-    return model;
+    swap(*this, copy);
 }
 
-QByteArray UserConfigModel::ToJSON(const QSharedPointer<UserConfigModel>& cfg)
+QJsonObject UserConfigModel::ToJson() const
 {
     QJsonObject object{};
 
-    object["City"] = cfg->GetCity();
-    object["ThemeIndex"] = static_cast<qint64>(cfg->GetThemeIndex());
+    object["City"] = mCity;
+    object["ThemeIndex"] = static_cast<qint64>(mThemeIndex);
 
-    return QJsonDocument{ object }.toJson();
+    return object;
 }

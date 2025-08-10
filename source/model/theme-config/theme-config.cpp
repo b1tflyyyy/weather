@@ -22,6 +22,26 @@
 
 #include "theme-config.hpp"
 
+void swap(ThemeConfigModel& lhs, ThemeConfigModel& rhs) noexcept
+{
+    std::swap(lhs.mThemeName, rhs.mThemeName);
+
+    std::swap(lhs.mDailyForecastDayColor, rhs.mDailyForecastDayColor);
+    std::swap(lhs.mDailyForecastDegreesColor, rhs.mDailyForecastDegreesColor);
+    std::swap(lhs.mDailyForecastHighLowDegreesColor, rhs.mDailyForecastHighLowDegreesColor);
+    std::swap(lhs.mDailyForecastLocationColor, rhs.mDailyForecastLocationColor);
+    std::swap(lhs.mDailyForecastDescriptionColor, rhs.mDailyForecastDescriptionColor);
+    std::swap(lhs.mDailyForecastCardColor, rhs.mDailyForecastCardColor);
+
+    std::swap(lhs.mHourlyForecastDegreesColor, rhs.mHourlyForecastDegreesColor);
+    std::swap(lhs.mHourlyForecastTimeColor, rhs.mHourlyForecastTimeColor);
+    std::swap(lhs.mHourlyForecastCardColor, rhs.mHourlyForecastCardColor);
+
+    std::swap(lhs.mWeatherBackgroundFirstGradientColor, rhs.mWeatherBackgroundFirstGradientColor);
+    std::swap(lhs.mWeatherBackgroundSecondGradientColor, rhs.mWeatherBackgroundSecondGradientColor);
+    std::swap(lhs.mWeatherBackgroundThirdGradientColor, rhs.mWeatherBackgroundThirdGradientColor);
+}
+
 QString ThemeConfigModel::GetThemeName() const noexcept { return mThemeName; }
 
 QColor ThemeConfigModel::GetDailyForecastDayColor() const noexcept { return mDailyForecastDayColor; }
@@ -39,25 +59,26 @@ QColor ThemeConfigModel::GetWeatherBackgroundFirstGradientColor() const noexcept
 QColor ThemeConfigModel::GetWeatherBackgroundSecondGradientColor() const noexcept { return mWeatherBackgroundSecondGradientColor; }
 QColor ThemeConfigModel::GetWeatherBackgroundThirdGradientColor() const noexcept { return mWeatherBackgroundThirdGradientColor; }
 
-QSharedPointer<ThemeConfigModel> ThemeConfigModel::FromJSON(const QJsonObject& obj) 
+void ThemeConfigModel::FromJson(const QJsonObject& json)
 {
-    auto model{ QSharedPointer<ThemeConfigModel>::create() };
-    model->mThemeName = obj.value(QStringLiteral("ThemeName")).toString();
+    ThemeConfigModel copy{};
 
-    model->mDailyForecastDayColor = obj.value(QStringLiteral("DailyForecastDayColor")).toString();
-    model->mDailyForecastDegreesColor = obj.value(QStringLiteral("DailyForecastDegreesColor")).toString();
-    model->mDailyForecastHighLowDegreesColor = obj.value(QStringLiteral("DailyForecastHighLowDegreesColor")).toString();
-    model->mDailyForecastLocationColor = obj.value(QStringLiteral("DailyForecastLocationColor")).toString();
-    model->mDailyForecastDescriptionColor = obj.value(QStringLiteral("DailyForecastDescriptionColor")).toString();
-    model->mDailyForecastCardColor = obj.value(QStringLiteral("DailyForecastCardColor")).toString();
+    copy.mThemeName = json.value(QStringLiteral("ThemeName")).toString();
 
-    model->mHourlyForecastDegreesColor = obj.value(QStringLiteral("HourlyForecastDegreesColor")).toString();
-    model->mHourlyForecastTimeColor = obj.value(QStringLiteral("HourlyForecastTimeColor")).toString();
-    model->mHourlyForecastCardColor = obj.value(QStringLiteral("HourlyForecastCardColor")).toString();
+    copy.mDailyForecastDayColor = json.value(QStringLiteral("DailyForecastDayColor")).toString();
+    copy.mDailyForecastDegreesColor = json.value(QStringLiteral("DailyForecastDegreesColor")).toString();
+    copy.mDailyForecastHighLowDegreesColor = json.value(QStringLiteral("DailyForecastHighLowDegreesColor")).toString();
+    copy.mDailyForecastLocationColor = json.value(QStringLiteral("DailyForecastLocationColor")).toString();
+    copy.mDailyForecastDescriptionColor = json.value(QStringLiteral("DailyForecastDescriptionColor")).toString();
+    copy.mDailyForecastCardColor = json.value(QStringLiteral("DailyForecastCardColor")).toString();
 
-    model->mWeatherBackgroundFirstGradientColor = obj.value(QStringLiteral("WeatherBackgroundFirstGradientColor")).toString();
-    model->mWeatherBackgroundSecondGradientColor = obj.value(QStringLiteral("WeatherBackgroundSecondGradientColor")).toString();
-    model->mWeatherBackgroundThirdGradientColor = obj.value(QStringLiteral("WeatherBackgroundThirdGradientColor")).toString();
+    copy.mHourlyForecastDegreesColor = json.value(QStringLiteral("HourlyForecastDegreesColor")).toString();
+    copy.mHourlyForecastTimeColor = json.value(QStringLiteral("HourlyForecastTimeColor")).toString();
+    copy.mHourlyForecastCardColor = json.value(QStringLiteral("HourlyForecastCardColor")).toString();
 
-    return model;
+    copy.mWeatherBackgroundFirstGradientColor = json.value(QStringLiteral("WeatherBackgroundFirstGradientColor")).toString();
+    copy.mWeatherBackgroundSecondGradientColor = json.value(QStringLiteral("WeatherBackgroundSecondGradientColor")).toString();
+    copy.mWeatherBackgroundThirdGradientColor = json.value(QStringLiteral("WeatherBackgroundThirdGradientColor")).toString();
+
+    swap(*this, copy);
 }

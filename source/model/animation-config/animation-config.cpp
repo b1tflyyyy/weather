@@ -22,12 +22,18 @@
 
 #include "animation-config.hpp"
 
+void swap(AnimationConfigModel& lhs, AnimationConfigModel& rhs) noexcept
+{
+    using std::swap;
+    swap(lhs.mThemeChangingDuration, rhs.mThemeChangingDuration);
+}
+
 int AnimationConfigModel::GetThemeChangingDuration() const noexcept { return mThemeChangingDuration; }
 
-QSharedPointer<AnimationConfigModel> AnimationConfigModel::FromJSON(const QJsonObject& obj) 
+void AnimationConfigModel::FromJson(const QJsonObject& json)
 {
-    auto model{ QSharedPointer<AnimationConfigModel>::create() };
+    AnimationConfigModel copy{};
+    copy.mThemeChangingDuration = json.value(QStringLiteral("ThemeChangingDuration")).toInt();
 
-    model->mThemeChangingDuration = obj.value(QStringLiteral("ThemeChangingDuration")).toInt();
-    return model;
+    swap(*this, copy);
 }

@@ -44,13 +44,6 @@ public:
     };
 
     explicit ThemeConfigListModel(const QVector<QSharedPointer<ThemeConfigModel>>& themes, QObject* parent = nullptr);
-    ~ThemeConfigListModel() noexcept override = default;
-
-    ThemeConfigListModel(const ThemeConfigListModel&) = delete;
-    ThemeConfigListModel& operator=(const ThemeConfigListModel&) = delete;
-
-    ThemeConfigListModel(ThemeConfigListModel&&) = delete;
-    ThemeConfigListModel& operator=(ThemeConfigListModel&&) = delete;
 
     int rowCount([[maybe_unused]] const QModelIndex& index) const override;
     QVariant data(const QModelIndex& index, int role) const override;

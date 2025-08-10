@@ -30,7 +30,13 @@
 #include <QSharedPointer>
 #include <QVector3D>
 
-class ThemeConfigModel : public QObject
+#include <QtSwap>
+
+#include <cassert>
+
+#include <utils/ijson-serializable/isjon-serializable.hpp>
+
+class ThemeConfigModel : public QObject, public IFromJson
 {
     Q_OBJECT
 
@@ -51,15 +57,11 @@ class ThemeConfigModel : public QObject
     Q_PROPERTY(QColor weatherBackgroundSecondGradientColor READ GetWeatherBackgroundSecondGradientColor CONSTANT);
     Q_PROPERTY(QColor weatherBackgroundThirdGradientColor READ GetWeatherBackgroundThirdGradientColor CONSTANT);
 
+public:
+    friend void swap(ThemeConfigModel& lhs, ThemeConfigModel& rhs) noexcept;
+
 public: 
     ThemeConfigModel() = default;
-    ~ThemeConfigModel() noexcept override = default;
-
-    ThemeConfigModel(const ThemeConfigModel&) = delete;
-    ThemeConfigModel& operator=(const ThemeConfigModel&) = delete;
-
-    ThemeConfigModel(ThemeConfigModel&&) = delete;
-    ThemeConfigModel& operator=(ThemeConfigModel&&) = delete;
 
     QString GetThemeName() const noexcept;
 
@@ -77,8 +79,8 @@ public:
     QColor GetWeatherBackgroundFirstGradientColor() const noexcept;
     QColor GetWeatherBackgroundSecondGradientColor() const noexcept;
     QColor GetWeatherBackgroundThirdGradientColor() const noexcept;
-
-    static QSharedPointer<ThemeConfigModel> FromJSON(const QJsonObject& obj);
+    
+    void FromJson(const QJsonObject& json) override;
 
 private:
     // Theme Name

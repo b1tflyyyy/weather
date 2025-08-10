@@ -27,25 +27,22 @@
 
 #include <QJsonObject>
 
-class AnimationConfigModel : public QObject
+#include <utils/ijson-serializable/isjon-serializable.hpp>
+
+class AnimationConfigModel : public QObject, public IFromJson
 {
     Q_OBJECT 
 
     Q_PROPERTY(int themeChangingDuration READ GetThemeChangingDuration CONSTANT);
 
 public:
+    friend void swap(AnimationConfigModel& lhs, AnimationConfigModel& rhs) noexcept;
+
+public:
     AnimationConfigModel() = default;
-    ~AnimationConfigModel() noexcept override = default;
-
-    AnimationConfigModel(const AnimationConfigModel&) = delete;
-    AnimationConfigModel& operator=(const AnimationConfigModel&) = delete;
-
-    AnimationConfigModel(AnimationConfigModel&&) = delete;
-    AnimationConfigModel& operator=(AnimationConfigModel&&) = delete;
 
     int GetThemeChangingDuration() const noexcept;
-
-    static QSharedPointer<AnimationConfigModel> FromJSON(const QJsonObject& obj);
+    void FromJson(const QJsonObject& json) override;
 
 private:
     int mThemeChangingDuration;

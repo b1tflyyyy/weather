@@ -29,24 +29,28 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-class UserConfigModel : public QObject 
+#include <utils/ijson-serializable/isjon-serializable.hpp>
+
+class UserConfigModel : public QObject, public IToJson, public IFromJson 
 {
     Q_OBJECT
 
     Q_PROPERTY(QString city READ GetCity CONSTANT);
-    Q_PROPERTY(std::size_t themeIndex READ GetThemeIndex WRITE SetThemeIndex CONSTANT);
+    Q_PROPERTY(std::size_t themeIndex READ GetThemeIndex WRITE SetThemeIndex);
+
+public:
+    friend void swap(UserConfigModel& lhs, UserConfigModel& rhs) noexcept;
 
 public:
     UserConfigModel() = default;
-    ~UserConfigModel() noexcept override = default;
 
     const QString& GetCity() const noexcept;
     
     std::size_t GetThemeIndex() const noexcept;
     void SetThemeIndex(std::size_t idx);
 
-    static QSharedPointer<UserConfigModel> FromJSON(const QJsonObject& obj);
-    static QByteArray ToJSON(const QSharedPointer<UserConfigModel>& cfg);
+    void FromJson(const QJsonObject& json) override;
+    QJsonObject ToJson() const override;
 
 private:
     QString mCity;

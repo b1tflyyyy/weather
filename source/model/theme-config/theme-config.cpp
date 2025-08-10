@@ -24,22 +24,24 @@
 
 void swap(ThemeConfigModel& lhs, ThemeConfigModel& rhs) noexcept
 {
-    std::swap(lhs.mThemeName, rhs.mThemeName);
+    using std::swap;
 
-    std::swap(lhs.mDailyForecastDayColor, rhs.mDailyForecastDayColor);
-    std::swap(lhs.mDailyForecastDegreesColor, rhs.mDailyForecastDegreesColor);
-    std::swap(lhs.mDailyForecastHighLowDegreesColor, rhs.mDailyForecastHighLowDegreesColor);
-    std::swap(lhs.mDailyForecastLocationColor, rhs.mDailyForecastLocationColor);
-    std::swap(lhs.mDailyForecastDescriptionColor, rhs.mDailyForecastDescriptionColor);
-    std::swap(lhs.mDailyForecastCardColor, rhs.mDailyForecastCardColor);
+    swap(lhs.mThemeName, rhs.mThemeName);
 
-    std::swap(lhs.mHourlyForecastDegreesColor, rhs.mHourlyForecastDegreesColor);
-    std::swap(lhs.mHourlyForecastTimeColor, rhs.mHourlyForecastTimeColor);
-    std::swap(lhs.mHourlyForecastCardColor, rhs.mHourlyForecastCardColor);
+    swap(lhs.mDailyForecastDayColor, rhs.mDailyForecastDayColor);
+    swap(lhs.mDailyForecastDegreesColor, rhs.mDailyForecastDegreesColor);
+    swap(lhs.mDailyForecastHighLowDegreesColor, rhs.mDailyForecastHighLowDegreesColor);
+    swap(lhs.mDailyForecastLocationColor, rhs.mDailyForecastLocationColor);
+    swap(lhs.mDailyForecastDescriptionColor, rhs.mDailyForecastDescriptionColor);
+    swap(lhs.mDailyForecastCardColor, rhs.mDailyForecastCardColor);
 
-    std::swap(lhs.mWeatherBackgroundFirstGradientColor, rhs.mWeatherBackgroundFirstGradientColor);
-    std::swap(lhs.mWeatherBackgroundSecondGradientColor, rhs.mWeatherBackgroundSecondGradientColor);
-    std::swap(lhs.mWeatherBackgroundThirdGradientColor, rhs.mWeatherBackgroundThirdGradientColor);
+    swap(lhs.mHourlyForecastDegreesColor, rhs.mHourlyForecastDegreesColor);
+    swap(lhs.mHourlyForecastTimeColor, rhs.mHourlyForecastTimeColor);
+    swap(lhs.mHourlyForecastCardColor, rhs.mHourlyForecastCardColor);
+
+    swap(lhs.mWeatherBackgroundFirstGradientColor, rhs.mWeatherBackgroundFirstGradientColor);
+    swap(lhs.mWeatherBackgroundSecondGradientColor, rhs.mWeatherBackgroundSecondGradientColor);
+    swap(lhs.mWeatherBackgroundThirdGradientColor, rhs.mWeatherBackgroundThirdGradientColor);
 }
 
 QString ThemeConfigModel::GetThemeName() const noexcept { return mThemeName; }

@@ -24,43 +24,20 @@
 
 void ThemeConfigController::LoadThemes(const QString& path)
 {
-    DEFAULT_LOGGER_INFO("Loading themes: \"{}\"", path.toStdString());
+    auto array{ ReadJsonArray(path) };
+    mThemeConfigs.resize(std::size(array));
 
-    QFile file{ path };
-    if (!file.open(QIODevice::ReadOnly))
+    for (std::size_t i{}; i < std::size(array); ++i)
     {
-        throw std::runtime_error{ std::format("failed to open themes file \"{}\"", path.toStdString()) };
+        mThemeConfigs[i] = QSharedPointer<ThemeConfigModel>::create();
+        mThemeConfigs[i]->FromJson(array[i].toObject());
     }
-
-    QByteArray data{ file.readAll() };
-    file.close();
-
-    QJsonParseError err{};
-    auto doc{ QJsonDocument::fromJson(data, &err) };
-    
-    if (err.error != QJsonParseError::NoError)
-    {
-        throw std::runtime_error{ std::format("failed to parse json \"{}\"", path.toStdString()) };
-    }
-    if (!doc.isArray())
-    {
-        throw std::runtime_error{ std::format("json \"{}\" is not an array", path.toStdString()) };
-    }
-
-    QJsonArray json_arr{ doc.array() };
-    
-    QVector<QSharedPointer<ThemeConfigModel>> copy{};
-    copy.reserve(json_arr.size());
-
-    for (const auto& el : json_arr)
-    {
-        copy.push_back(ThemeConfigModel::FromJSON(el.toObject()));
-    }
-
-    std::swap(copy, mThemeConfigs);
 }
 
-QObject* ThemeConfigController::GetCurrentTheme() { return mThemeConfigs[mCurrentThemeIndex].data(); }
+QObject* ThemeConfigController::GetCurrentTheme() 
+{ 
+    return dynamic_cast<QObject*>(mThemeConfigs[mCurrentThemeIndex].data()); 
+}
 
 void ThemeConfigController::SetCurrentTheme(std::size_t index)
 {

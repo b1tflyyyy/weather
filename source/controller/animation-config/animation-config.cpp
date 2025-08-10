@@ -25,25 +25,7 @@
 void AnimationConfigController::LoadAnimationSettings(const QString& path)
 {
     DEFAULT_LOGGER_INFO("Loading animation settings: \"{}\"", path.toStdString());
-
-    QFile file{ path };
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        throw std::runtime_error{ std::format("failed to open animation settings file \"{}\"", path.toStdString()) };
-    }
-
-    QByteArray data{ file.readAll() };
-    file.close();
-
-    QJsonParseError err{};
-    auto doc{ QJsonDocument::fromJson(data, &err) };
-
-    if (err.error != QJsonParseError::NoError)
-    {
-        throw std::runtime_error{ std::format("failed to parse json \"{}\"", path.toStdString()) };
-    }
-
-    mAnimationSpeedModel = AnimationConfigModel::FromJSON(doc.object());
+    ReadJson(&mAnimationSpeedModel, path);
 }
 
-QObject* AnimationConfigController::GetAnimationSpeed() { return mAnimationSpeedModel.data(); }
+QObject* AnimationConfigController::GetAnimationSettings() { return &mAnimationSpeedModel; }

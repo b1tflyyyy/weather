@@ -28,8 +28,9 @@
 #include <model/user-config/user-config.hpp>
 
 #include <utils/logger/logger.hpp>
+#include <utils/json-io/json-io.hpp>
 
-class UserConfigController : public QObject 
+class UserConfigController : public QObject, protected JsonIO
 {
     Q_OBJECT
 
@@ -37,14 +38,13 @@ class UserConfigController : public QObject
 
 public:
     UserConfigController(const QString& path);
-    ~UserConfigController() noexcept override = default;
 
     void LoadUserConfig();
     Q_INVOKABLE void SaveUserConfig();
 
-    QObject* GetUserConfig() const noexcept;
+    QObject* GetUserConfig();
     
 private:
     QString mPath;
-    QSharedPointer<UserConfigModel> mUserConfigModel;
+    UserConfigModel mUserConfigModel;
 };

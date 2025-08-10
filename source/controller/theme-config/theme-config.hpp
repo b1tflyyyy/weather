@@ -35,8 +35,9 @@
 #include <model/theme-config/theme-config.hpp>
 
 #include <utils/logger/logger.hpp>
+#include <utils/json-io/json-io.hpp>
 
-class ThemeConfigController : public QObject
+class ThemeConfigController : public QObject, protected JsonIO
 {
     Q_OBJECT
 
@@ -44,13 +45,6 @@ class ThemeConfigController : public QObject
 
 public:
     ThemeConfigController() = default;
-    ~ThemeConfigController() noexcept override = default;
-
-    ThemeConfigController(const ThemeConfigController&) = delete;
-    ThemeConfigController& operator=(const ThemeConfigController&) = delete;
-
-    ThemeConfigController(ThemeConfigController&&) noexcept = delete;
-    ThemeConfigController& operator=(ThemeConfigController&&) noexcept = delete;
 
     void LoadThemes(const QString& path);
     

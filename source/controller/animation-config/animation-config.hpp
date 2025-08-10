@@ -30,26 +30,20 @@
 #include <model/animation-config/animation-config.hpp>
 
 #include <utils/logger/logger.hpp>
+#include <utils/json-io/json-io.hpp>
 
-class AnimationConfigController : public QObject
+class AnimationConfigController : public QObject, protected JsonIO
 {
     Q_OBJECT 
 
-    Q_PROPERTY(QObject* animationConfig READ GetAnimationSpeed CONSTANT);
+    Q_PROPERTY(QObject* animationConfig READ GetAnimationSettings CONSTANT);
 
 public:
     AnimationConfigController() = default;
-    ~AnimationConfigController() noexcept override = default;
-
-    AnimationConfigController(const AnimationConfigController&) = delete;
-    AnimationConfigController& operator=(const AnimationConfigController&) = delete;
-
-    AnimationConfigController(AnimationConfigController&&) = delete;
-    AnimationConfigController& operator=(AnimationConfigController&&) = delete;
 
     void LoadAnimationSettings(const QString& path);
-    QObject* GetAnimationSpeed();
+    QObject* GetAnimationSettings();
 
 private:
-    QSharedPointer<AnimationConfigModel> mAnimationSpeedModel;
+    AnimationConfigModel mAnimationSpeedModel;
 };

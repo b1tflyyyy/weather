@@ -31,4 +31,5 @@ target_link_libraries(${LIB_NAME} PUBLIC
     qt6_lib 
     theme_config_model
     logger    
+    json_io
 )

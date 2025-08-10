@@ -30,44 +30,13 @@ UserConfigController::UserConfigController(const QString& path)
 void UserConfigController::LoadUserConfig()
 {
     DEFAULT_LOGGER_INFO("Loading user config: \"{}\"", mPath.toStdString());
-
-    QFile file{ mPath };
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        throw std::runtime_error{ std::format("failed to open user config for reading \"{}\"", mPath.toStdString()) };
-    }
-
-    QByteArray data{ file.readAll() };
-    file.close();
-
-    QJsonParseError err{};
-    auto doc{ QJsonDocument::fromJson(data, &err) };
-
-    if (err.error != QJsonParseError::NoError)
-    {
-        throw std::runtime_error{ std::format("failed to parse json \"{}\"", mPath.toStdString()) };
-    }
-    if (!doc.isObject())
-    {
-        throw std::runtime_error{ std::format("json \"{}\" is not an object", mPath.toStdString()) };
-    }
-
-    mUserConfigModel = UserConfigModel::FromJSON(doc.object());
+    ReadJson(&mUserConfigModel, mPath);
 }
 
 void UserConfigController::SaveUserConfig()
 {
-    QFile file{ mPath };
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-    {
-        throw std::runtime_error{ std::format("failed to open user config for writing \"{}\"", mPath.toStdString()) };
-    }
-
-    auto data{ UserConfigModel::ToJSON(mUserConfigModel) };
-    file.write(data);
-
-    file.close();
+    WriteJson(&mUserConfigModel, mPath, QIODeviceBase::WriteOnly | QIODeviceBase::Truncate);
 }
 
-QObject* UserConfigController::GetUserConfig() const noexcept { return dynamic_cast<QObject*>(mUserConfigModel.data()); }
+QObject* UserConfigController::GetUserConfig() { return dynamic_cast<QObject*>(&mUserConfigModel); }
 

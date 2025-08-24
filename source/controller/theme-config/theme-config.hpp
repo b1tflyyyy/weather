@@ -57,6 +57,6 @@ signals:
     void currentThemeChanged();
 
 private:
-    QVector<QSharedPointer<ThemeConfigModel>> mThemeConfigs;
+    QVector<QSharedPointer<ThemeConfigModel>> mThemeConfigs; // TODO: move it to the theme-config-list
     std::size_t mCurrentThemeIndex;
 };

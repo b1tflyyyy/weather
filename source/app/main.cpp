@@ -31,10 +31,12 @@
 #include <model/theme-config/theme-config.hpp>
 #include <model/theme-config-list/theme-config-list.hpp>
 #include <model/user-config/user-config.hpp>
+#include <model/forecast-card-list/forecast-card-list.hpp>
 
 #include <controller/theme-config/theme-config.hpp>
 #include <controller/animation-config/animation-config.hpp>
 #include <controller/user-config/user-config.hpp>
+#include <controller/forecast-card/forecast-card.hpp>
 
 #include <internal/opengl/qml/gradient-background/gradient-background.hpp>
 
@@ -54,6 +56,9 @@ int main(int argc, char** argv)
     ThemeConfigController theme_config_controller{};
     AnimationConfigController animation_config_controller{};
     UserConfigController user_config_controller{ QStringLiteral("user_config.json") };
+    ForecastCardController forecast_card_controller{};
+    
+    ForecastCardListModel forecast_card_list_model{};
 
     try 
     {
@@ -93,6 +98,11 @@ int main(int argc, char** argv)
     ctx->setContextProperty(QStringLiteral("themeConfigListModel"), &theme_config_list_model);
     ctx->setContextProperty(QStringLiteral("animationConfigController"), &animation_config_controller);
     ctx->setContextProperty(QStringLiteral("userConfigController"), &user_config_controller);
+    ctx->setContextProperty(QStringLiteral("forecastCardModel"), &forecast_card_list_model);
+    ctx->setContextProperty(QStringLiteral("forecastCardController"), &forecast_card_controller);
+
+    QObject::connect(&forecast_card_controller, &ForecastCardController::forecastUpdated,
+                     &forecast_card_list_model, &ForecastCardListModel::setForecastCards);
 
     RegisterQMLTypes();
 

@@ -6,6 +6,7 @@
         <file>pages/main-page/components/daily-forecast-panel/DailyForecastPanel.qml</file>
         <file>pages/main-page/components/hourly-forecast-panel/HourlyForecastPanel.qml</file>
         <file>pages/main-page/components/hourly-forecast-panel/HourlyWeatherWidget.qml</file>
+        <file>pages/main-page/components/forecast-fetching-data-indicator/ForecastFetchingDataIndicator.qml</file>
         <file>pages/settings-page/SettingsIcon.qml</file>
         <file>pages/settings-page/SettingsPage.qml</file>
         <file>pages/settings-page/components/ThemeWidget.qml</file>
@@ -15,5 +16,7 @@
         <file>assets/images/sunny.png</file>
         <file>assets/images/windy.png</file>
         <file>assets/icons/settings.png</file>
+        <file>assets/icons/loading.png</file>
+        <file>assets/icons/arrow-down.png</file>
     </qresource>
 </RCC>

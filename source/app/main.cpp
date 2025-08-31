@@ -125,8 +125,9 @@ void SetupFormat()
 {
     QSurfaceFormat fmt{};
     fmt.setSwapInterval(1);
-    fmt.setRenderableType(QSurfaceFormat::OpenGL);
     fmt.setProfile(QSurfaceFormat::CoreProfile);
+    fmt.setRenderableType(QSurfaceFormat::OpenGL);
+    fmt.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
     fmt.setVersion(4, 5);
     
     QSurfaceFormat::setDefaultFormat(fmt);

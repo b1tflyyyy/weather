@@ -28,6 +28,7 @@ ListView {
 
     property real scrollingSpeed: 15.0
 
+    /*
     ListModel { // for test
         id: _testForecastModel
 
@@ -95,6 +96,7 @@ ListView {
             degreesHigh: 24
         }
     } // for test
+    */
 
     Behavior on contentX {
         NumberAnimation {
@@ -110,7 +112,7 @@ ListView {
 
     boundsBehavior: Flickable.DragAndOvershootBounds
 
-    model: _testForecastModel
+    model: forecastCardModel
     
     delegate: DailyWeatherWidget {
         height: _forecastPanel.height 

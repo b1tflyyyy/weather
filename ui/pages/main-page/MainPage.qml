@@ -27,6 +27,7 @@ import "../settings-page"
 
 import "components/daily-forecast-panel"
 import "components/hourly-forecast-panel"
+import "components/forecast-fetching-data-indicator"
 
 import GradientBackgroundOpenGL 1.0
 
@@ -37,8 +38,36 @@ Rectangle {
     property color secondBackgroundGradientColor: themeConfigController.currentTheme.weatherBackgroundSecondGradientColor
     property color thirdBackgroundGradientColor: themeConfigController.currentTheme.weatherBackgroundThirdGradientColor
 
+    property bool canFetchData: true
+    property bool canMoveMouse: false
+
+    property real startY: 0.0
+    property real changingY: canMoveMouse ? _mouseArea.mouseY : 0.0
+
+    property real previousYOffset: 0.0
+    property real currentYOffset: Math.max(0.0, (changingY - startY) * 0.5)
+
     readonly property int themeChangingDuration: animationConfigController.animationConfig.themeChangingDuration
-    
+
+    // calculation of offset from top (pull & refresh model)
+    onCurrentYOffsetChanged: function() {
+        if (previousYOffset < 50.0) {
+            previousYOffset = currentYOffset
+            _forecastDataFetchingIndicator.showArrowDown = true
+            return 
+        }
+
+        previousYOffset = Math.max(previousYOffset, currentYOffset)
+        previousYOffset = Math.min(previousYOffset, 50.0)
+
+        if (previousYOffset >= 50 && canFetchData) {           
+            _forecastDataFetchingIndicator.showArrowDown = false 
+            
+            canFetchData = false
+            forecastCardController.FetchForecast()
+        }
+    }
+
     Behavior on firstBackgroundGradientColor {
         ColorAnimation {
             duration: themeChangingDuration
@@ -60,6 +89,31 @@ Rectangle {
         }
     }
 
+    Connections {
+        target: forecastCardController
+
+        onForecastFetchedSuccessfully: function() {
+            canFetchData = true
+            previousYOffset = 0.0
+        }
+    }
+
+    MouseArea {
+        id: _mouseArea
+
+        anchors.fill: parent 
+        propagateComposedEvents: true
+        
+        onPressed: function(mouse) {
+            startY = mouse.y
+            canMoveMouse = true
+        }
+
+        onReleased: function() {
+            canMoveMouse = false
+        }
+    }
+
     GradientBackground {
         id: _gradientBackground
         anchors.fill: parent
@@ -69,15 +123,39 @@ Rectangle {
         thirdGradientColor: Qt.vector3d(thirdBackgroundGradientColor.r, thirdBackgroundGradientColor.g, thirdBackgroundGradientColor.b)
     }
 
+    ForecastFetchingDataIndicator {
+        id: _forecastDataFetchingIndicator
+
+        opacity: Math.min(previousYOffset / 100, 0.5)
+        visible: previousYOffset >= 2 
+
+        width: previousYOffset 
+        height: previousYOffset 
+
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            
+            top: parent.top 
+            topMargin: 10
+        }
+    }
+
     DailyForecastPanel {
         id: _forecastPanel
+
+        Behavior on anchors.topMargin {
+            NumberAnimation { 
+                duration: 200
+                easing.type: Easing.OutCubic
+            }
+        }
 
         height: parent.height * 0.40
         width: parent.width
 
         anchors {
             top: parent.top
-            topMargin: 20
+            topMargin: 20 + previousYOffset
 
             left: parent.left
             leftMargin: 10

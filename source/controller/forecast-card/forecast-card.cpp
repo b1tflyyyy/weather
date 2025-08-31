@@ -24,32 +24,41 @@
 
 void ForecastCardController::FetchForecast()
 {
-    QVector<QSharedPointer<ForecastCardModel>> forecast_cards{};
+    std::thread th{ [this]() -> void 
+    {
+        QVector<QSharedPointer<ForecastCardModel>> forecast_cards{};
 
-    // Test data
-    forecast_cards.emplace_back(QSharedPointer<ForecastCardModel>::create(QStringLiteral("qrc:/assets/images/cloudy.png"),
-                                QStringLiteral("Cloudy"),
-                                QStringLiteral("Bratislava"),
-                                QStringLiteral("Today"),
-                                std::rand() % 50,
-                                -12,
-                                25));
+        // Test data
+        forecast_cards.emplace_back(QSharedPointer<ForecastCardModel>::create(QStringLiteral("qrc:/assets/images/cloudy.png"),
+                                    QStringLiteral("Cloudy"),
+                                    QStringLiteral("Bratislava"),
+                                    QStringLiteral("Today"),
+                                    std::rand() % 50,
+                                    -12,
+                                    25));
 
-    forecast_cards.emplace_back(QSharedPointer<ForecastCardModel>::create(QStringLiteral("qrc:/assets/images/cloudy.png"),
-                                QStringLiteral("Cloudy"),
-                                QStringLiteral("Bratislava"),
-                                QStringLiteral("Fri"),
-                                std::rand() % 50,
-                                -12,
-                                25));
+        forecast_cards.emplace_back(QSharedPointer<ForecastCardModel>::create(QStringLiteral("qrc:/assets/images/cloudy.png"),
+                                    QStringLiteral("Cloudy"),
+                                    QStringLiteral("Bratislava"),
+                                    QStringLiteral("Fri"),
+                                    std::rand() % 50,
+                                    -12,
+                                    25));
 
-    forecast_cards.emplace_back(QSharedPointer<ForecastCardModel>::create(QStringLiteral("qrc:/assets/images/cloudy.png"),
-                                QStringLiteral("Cloudy"),
-                                QStringLiteral("Bratislava"),
-                                QStringLiteral("Sat"),
-                                std::rand() % 50,
-                                -12,
-                                25));
+        forecast_cards.emplace_back(QSharedPointer<ForecastCardModel>::create(QStringLiteral("qrc:/assets/images/cloudy.png"),
+                                    QStringLiteral("Cloudy"),
+                                    QStringLiteral("Bratislava"),
+                                    QStringLiteral("Sat"),
+                                    std::rand() % 50,
+                                    -12,
+                                    25));
 
-    emit forecastUpdated(forecast_cards);
+
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+
+        emit forecastFetchedSuccessfully();
+        emit forecastUpdated(forecast_cards);
+    } };
+
+    th.detach();
 }

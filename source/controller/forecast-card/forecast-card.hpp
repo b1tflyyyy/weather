@@ -26,6 +26,8 @@
 #include <QSharedPointer>
 #include <QVector>
 
+#include <thread>
+
 #include <model/forecast-card/forecast-card.hpp>
 
 class ForecastCardController : public QObject
@@ -39,4 +41,5 @@ public:
 
 signals:
     void forecastUpdated(const QVector<QSharedPointer<ForecastCardModel>>& forecast_cards);
+    void forecastFetchedSuccessfully();
 };

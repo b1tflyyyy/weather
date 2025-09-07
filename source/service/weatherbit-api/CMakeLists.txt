@@ -22,4 +22,12 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-add_subdirectory(logger)
+set(LIB_NAME weatherbit_api_service)
+
+add_library(${LIB_NAME} STATIC weatherbit-api.hpp weatherbit-api.cpp)
+enable_qt_autogen(${LIB_NAME})
+
+target_link_libraries(${LIB_NAME} PUBLIC
+    qt6_lib
+    logger
+)

@@ -22,23 +22,12 @@
 
 #pragma once
 
-#include <QFile>
-#include <QJsonDocument>
-#include <QVector>
-#include <QJsonArray>
+#include <QString>
 
-#include <utils/ijson-serializable/isjon-serializable.hpp>
-
-class JsonIO
+class IWeatherForecastAPI
 {
 public:
-    JsonIO() = default;
-    ~JsonIO() noexcept = default;
+    virtual ~IWeatherForecastAPI() noexcept = default;
 
-protected:
-    void ReadJson(IFromJson* abstract_object, const QString& path, QFlags<QIODeviceBase::OpenModeFlag> flags = QIODeviceBase::ReadOnly);
-    void WriteJson(const IToJson* abstract_object, const QString& path, QFlags<QIODeviceBase::OpenModeFlag> flags = QIODeviceBase::WriteOnly);
-
-    QJsonArray ReadJsonArray(const QString& path, QFlags<QIODeviceBase::OpenModeFlag> flags = QIODeviceBase::ReadOnly);    
-    void WriteJsonArray(const QVector<IToJson*>& container, const QString& path, QFlags<QIODeviceBase::OpenModeFlag> flags = QIODeviceBase::WriteOnly);
+    virtual void FetchMultiDayWeatherForecast() = 0;
 };

@@ -30,7 +30,7 @@
 #include <model/animation-config/animation-config.hpp>
 
 #include <utils/logger/logger.hpp>
-#include <utils/json-io/json-io.hpp>
+#include <service/json-io/json-io.hpp>
 
 class AnimationConfigController : public QObject, protected JsonIO
 {

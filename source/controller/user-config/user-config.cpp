@@ -39,4 +39,5 @@ void UserConfigController::SaveUserConfig()
 }
 
 QObject* UserConfigController::GetUserConfig() { return dynamic_cast<QObject*>(&mUserConfigModel); }
+const UserConfigModel& UserConfigController::GetInternalUserConfig() const noexcept { return mUserConfigModel; }
 

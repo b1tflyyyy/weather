@@ -22,43 +22,28 @@
 
 #include "forecast-card.hpp"
 
+ForecastCardController::ForecastCardController(const UserConfigModel& user_config_model)
+    : mWeatherbitAPIService{ user_config_model }
+{ 
+    SetupConnection();
+}
+
 void ForecastCardController::FetchForecast()
 {
-    std::thread th{ [this]() -> void 
-    {
-        QVector<QSharedPointer<ForecastCardModel>> forecast_cards{};
+    mWeatherbitAPIService.FetchMultiDayWeatherForecast();
+}
 
-        // Test data
-        forecast_cards.emplace_back(QSharedPointer<ForecastCardModel>::create(QStringLiteral("qrc:/assets/images/cloudy.png"),
-                                    QStringLiteral("Cloudy"),
-                                    QStringLiteral("Bratislava"),
-                                    QStringLiteral("Today"),
-                                    std::rand() % 50,
-                                    -12,
-                                    25));
+// TODO:
+void ForecastCardController::weatherAPIServiceDataFetched(const QString& json)
+{
+    DEFAULT_LOGGER_INFO("message from {}\n", __PRETTY_FUNCTION__);
+    emit forecastFetchedSuccessfully();
+}
 
-        forecast_cards.emplace_back(QSharedPointer<ForecastCardModel>::create(QStringLiteral("qrc:/assets/images/cloudy.png"),
-                                    QStringLiteral("Cloudy"),
-                                    QStringLiteral("Bratislava"),
-                                    QStringLiteral("Fri"),
-                                    std::rand() % 50,
-                                    -12,
-                                    25));
-
-        forecast_cards.emplace_back(QSharedPointer<ForecastCardModel>::create(QStringLiteral("qrc:/assets/images/cloudy.png"),
-                                    QStringLiteral("Cloudy"),
-                                    QStringLiteral("Bratislava"),
-                                    QStringLiteral("Sat"),
-                                    std::rand() % 50,
-                                    -12,
-                                    25));
-
-
-        std::this_thread::sleep_for(std::chrono::seconds(2));
-
-        emit forecastFetchedSuccessfully();
-        emit forecastUpdated(forecast_cards);
-    } };
-
-    th.detach();
+void ForecastCardController::SetupConnection()
+{
+    QObject::connect(&mWeatherbitAPIService, 
+                     &WeatherbitAPIService::weatherForecastFetchedSuccessfully, 
+                     this, 
+                     &ForecastCardController::weatherAPIServiceDataFetched);
 }

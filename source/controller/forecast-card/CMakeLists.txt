@@ -30,4 +30,6 @@ enable_qt_autogen(${LIB_NAME})
 target_link_libraries(${LIB_NAME} PUBLIC 
     qt6_lib 
     forecast_card_model
+    logger
+    weatherbit_api_service
 )

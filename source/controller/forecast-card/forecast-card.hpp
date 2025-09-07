@@ -25,21 +25,41 @@
 #include <QObject>
 #include <QSharedPointer>
 #include <QVector>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
+
+#include <QUrl>
+#include <QUrlQuery>
 
 #include <thread>
 
 #include <model/forecast-card/forecast-card.hpp>
+#include <model/user-config/user-config.hpp>
+
+#include <utils/logger/logger.hpp>
+
+#include <service/weatherbit-api/weatherbit-api.hpp>
 
 class ForecastCardController : public QObject
 {
     Q_OBJECT
 
 public:
-    ForecastCardController() = default;
+    ForecastCardController(const UserConfigModel& user_config_model);
 
     Q_INVOKABLE void FetchForecast();
 
 signals:
-    void forecastUpdated(const QVector<QSharedPointer<ForecastCardModel>>& forecast_cards);
     void forecastFetchedSuccessfully();
+    void forecastUpdated(const QVector<QSharedPointer<ForecastCardModel>>& forecast_cards);
+    
+public slots:
+    void weatherAPIServiceDataFetched(const QString& json);
+
+private:
+    void SetupConnection();
+
+private:
+    WeatherbitAPIService mWeatherbitAPIService;
 };

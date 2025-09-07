@@ -55,16 +55,15 @@ int main(int argc, char** argv)
 
     ThemeConfigController theme_config_controller{};
     AnimationConfigController animation_config_controller{};
-    UserConfigController user_config_controller{ QStringLiteral("user_config.json") };
-    ForecastCardController forecast_card_controller{};
-    
+    UserConfigController user_config_controller{ QStringLiteral("user_config.json") }; // TODO: remove this    
     ForecastCardListModel forecast_card_list_model{};
 
     try 
     {
+        // TODO: create an interface for load/save configs
         theme_config_controller.LoadThemes(QStringLiteral("themes.json"));
         animation_config_controller.LoadAnimationSettings(QStringLiteral("animation_settings.json"));
-        user_config_controller.LoadUserConfig();
+        user_config_controller.LoadUserConfig(); // TODO: rewrite
     }
     catch (const std::runtime_error& e)
     {
@@ -85,6 +84,8 @@ int main(int argc, char** argv)
         
         return -1;
     }
+
+    ForecastCardController forecast_card_controller{ user_config_controller.GetInternalUserConfig() };
 
     auto* user_config_model{ dynamic_cast<UserConfigModel*>(user_config_controller.GetUserConfig()) };
     theme_config_controller.SetCurrentTheme(user_config_model->GetThemeIndex());

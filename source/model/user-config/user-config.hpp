@@ -29,7 +29,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include <utils/ijson-serializable/isjon-serializable.hpp>
+#include <interface/isjon-serializable.hpp>
 
 class UserConfigModel : public QObject, public IToJson, public IFromJson 
 {
@@ -45,6 +45,11 @@ public:
     UserConfigModel() = default;
 
     const QString& GetCity() const noexcept;
+    const QString& GetWeatherAPIToken() const noexcept;
+    const QString& GetUnits() const noexcept;
+    
+    double GetLatitude() const noexcept;
+    double GetLongitude() const noexcept;
     
     std::size_t GetThemeIndex() const noexcept;
     void SetThemeIndex(std::size_t idx);
@@ -54,5 +59,9 @@ public:
 
 private:
     QString mCity;
+    QString mWeatherAPIToken;
+    QString mUnits;
+    double mLongitude;
+    double mLatitude;
     std::size_t mThemeIndex;
 };

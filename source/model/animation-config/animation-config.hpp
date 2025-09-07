@@ -27,7 +27,7 @@
 
 #include <QJsonObject>
 
-#include <utils/ijson-serializable/isjon-serializable.hpp>
+#include <interface/isjon-serializable.hpp>
 
 class AnimationConfigModel : public QObject, public IFromJson
 {

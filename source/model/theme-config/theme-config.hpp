@@ -34,7 +34,7 @@
 
 #include <cassert>
 
-#include <utils/ijson-serializable/isjon-serializable.hpp>
+#include <interface/isjon-serializable.hpp>
 
 class ThemeConfigModel : public QObject, public IFromJson
 {

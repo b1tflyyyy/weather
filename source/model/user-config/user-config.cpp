@@ -28,9 +28,18 @@ void swap(UserConfigModel& lhs, UserConfigModel& rhs) noexcept
 
     swap(lhs.mCity, rhs.mCity);
     swap(lhs.mThemeIndex, rhs.mThemeIndex);
+    swap(lhs.mWeatherAPIToken, rhs.mWeatherAPIToken);
+    swap(lhs.mUnits, rhs.mUnits);
+    swap(lhs.mLatitude, rhs.mLatitude);
+    swap(lhs.mLongitude, rhs.mLongitude);
 }
 
 const QString& UserConfigModel::GetCity() const noexcept { return mCity; }
+const QString& UserConfigModel::GetWeatherAPIToken() const noexcept { return mWeatherAPIToken; }
+const QString& UserConfigModel::GetUnits() const noexcept { return mUnits; }
+
+double UserConfigModel::GetLatitude() const noexcept { return mLatitude; }
+double UserConfigModel::GetLongitude() const noexcept { return mLongitude; }
 
 std::size_t UserConfigModel::GetThemeIndex() const noexcept { return mThemeIndex; }
 
@@ -44,7 +53,11 @@ void UserConfigModel::FromJson(const QJsonObject& json)
     UserConfigModel copy{};
 
     copy.mCity = json.value(QStringLiteral("City")).toString();
+    copy.mWeatherAPIToken = json.value(QStringLiteral("WeatherAPIToken")).toString();
     copy.mThemeIndex = static_cast<std::size_t>(json.value(QStringLiteral("ThemeIndex")).toInteger());
+    copy.mLatitude = json.value(QStringLiteral("Latitude")).toDouble();
+    copy.mLongitude = json.value(QStringLiteral("Longitude")).toDouble();    
+    copy.mUnits = json.value(QStringLiteral("Units")).toString();
 
     swap(*this, copy);
 }
@@ -54,7 +67,11 @@ QJsonObject UserConfigModel::ToJson() const
     QJsonObject object{};
 
     object["City"] = mCity;
+    object["WeatherAPIToken"] = mWeatherAPIToken;
     object["ThemeIndex"] = static_cast<qint64>(mThemeIndex);
+    object["Latitude"] = mLatitude;
+    object["Longitude"] = mLongitude;
+    object["Units"] = mUnits;
 
     return object;
 }

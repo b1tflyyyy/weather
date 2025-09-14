@@ -34,9 +34,9 @@ import GradientBackgroundOpenGL 1.0
 Rectangle {
     id: _mainPage
 
-    property color firstBackgroundGradientColor: themeConfigController.currentTheme.weatherBackgroundFirstGradientColor
-    property color secondBackgroundGradientColor: themeConfigController.currentTheme.weatherBackgroundSecondGradientColor
-    property color thirdBackgroundGradientColor: themeConfigController.currentTheme.weatherBackgroundThirdGradientColor
+    property color firstBackgroundGradientColor: themeModel.currentTheme.weatherBackgroundFirstGradientColor
+    property color secondBackgroundGradientColor: themeModel.currentTheme.weatherBackgroundSecondGradientColor
+    property color thirdBackgroundGradientColor: themeModel.currentTheme.weatherBackgroundThirdGradientColor
 
     property bool canFetchData: true
     property bool canMoveMouse: false

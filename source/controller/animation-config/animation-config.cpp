@@ -22,10 +22,34 @@
 
 #include "animation-config.hpp"
 
-void AnimationConfigController::LoadAnimationSettings(const QString& path)
+void AnimationConfigController::SetPath(const QString& path)
 {
-    DEFAULT_LOGGER_INFO("Loading animation settings: \"{}\"", path.toStdString());
-    ReadJson(&mAnimationSpeedModel, path);
+    mPath = path;
+}
+
+const QString& AnimationConfigController::GetPath() const noexcept
+{
+    return mPath;
+}
+
+void AnimationConfigController::Load()
+{
+    try 
+    {
+        ReadJson(&mAnimationSpeedModel, mPath);
+    }
+    catch (const std::runtime_error& e)
+    {
+        mErrorEmitter.ReportError(e.what(), ErrorEmitter::ErrorStatus::CRITICAL);
+        return;
+    }
+    catch (...)
+    {
+        mErrorEmitter.ReportError(QStringLiteral("unexpected error at {} path {}").arg(__PRETTY_FUNCTION__).arg(mPath), ErrorEmitter::ErrorStatus::CRITICAL);
+        return;
+    }
 }
 
 QObject* AnimationConfigController::GetAnimationSettings() { return &mAnimationSpeedModel; }
+
+ErrorEmitter* AnimationConfigController::GetErrorEmitter() { return &mErrorEmitter; }

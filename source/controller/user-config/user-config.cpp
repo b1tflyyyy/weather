@@ -22,21 +22,47 @@
 
 #include "user-config.hpp"
 
-UserConfigController::UserConfigController(const QString& path)
-    : QObject{}
-    , mPath{ path }
-{ }
+void UserConfigController::SetPath(const QString& path) { mPath = path; }
+const QString& UserConfigController::GetPath() const noexcept { return mPath; }
 
-void UserConfigController::LoadUserConfig()
+void UserConfigController::Load()
 {
-    DEFAULT_LOGGER_INFO("Loading user config: \"{}\"", mPath.toStdString());
-    ReadJson(&mUserConfigModel, mPath);
+    try 
+    {
+        ReadJson(&mUserConfigModel, mPath);
+        emit userConfigLoadedSuccessfully(mUserConfigModel);
+    }
+    catch (const std::runtime_error& e)
+    {
+        mErrorEmitter.ReportError(e.what(), ErrorEmitter::ErrorStatus::CRITICAL);
+        return;
+    }
+    catch (...)
+    {
+        mErrorEmitter.ReportError(QStringLiteral("unexpected error at {} path {}").arg(__PRETTY_FUNCTION__).arg(mPath), ErrorEmitter::ErrorStatus::CRITICAL);
+        return;
+    }
 }
 
-void UserConfigController::SaveUserConfig()
+void UserConfigController::Save()
 {
-    WriteJson(&mUserConfigModel, mPath, QIODeviceBase::WriteOnly | QIODeviceBase::Truncate);
+    try 
+    {
+        WriteJson(&mUserConfigModel, mPath, QIODeviceBase::WriteOnly | QIODeviceBase::Truncate);
+    }
+    catch (const std::runtime_error& e)
+    {
+        mErrorEmitter.ReportError(e.what(), ErrorEmitter::ErrorStatus::CRITICAL);
+        return;
+    }
+    catch (...)
+    {
+        mErrorEmitter.ReportError(QStringLiteral("unexpected error at {} path {}").arg(__PRETTY_FUNCTION__).arg(mPath), ErrorEmitter::ErrorStatus::CRITICAL);
+        return;
+    }
 }
+
+ErrorEmitter* UserConfigController::GetErrorEmitter() { return &mErrorEmitter; }
 
 QObject* UserConfigController::GetUserConfig() { return dynamic_cast<QObject*>(&mUserConfigModel); }
 const UserConfigModel& UserConfigController::GetInternalUserConfig() const noexcept { return mUserConfigModel; }

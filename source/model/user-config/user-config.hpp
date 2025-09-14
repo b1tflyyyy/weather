@@ -31,7 +31,10 @@
 
 #include <interface/isjon-serializable.hpp>
 
-class UserConfigModel : public QObject, public IToJson, public IFromJson 
+class UserConfigModel 
+    : public QObject
+    , public IToJson
+    , public IFromJson 
 {
     Q_OBJECT
 

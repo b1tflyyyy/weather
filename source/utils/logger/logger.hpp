@@ -22,7 +22,6 @@
 
 #pragma once
 
-#include <string>
 #include <memory>
 
 #include <spdlog/spdlog.h>
@@ -43,11 +42,39 @@ private:
 };
 
 #if defined (ENABLE_LOGS)
-    #define DEFAULT_LOGGER_INIT()         Logger::Init()
-    #define DEFAULT_LOGGER_ERROR(...)     Logger::GetDefaultLogger()->error(__VA_ARGS__)
-    #define DEFAULT_LOGGER_WARN(...)      Logger::GetDefaultLogger()->warn(__VA_ARGS__)
-    #define DEFAULT_LOGGER_CRITICAL(...)  Logger::GetDefaultLogger()->critical(__VA_ARGS__)
-    #define DEFAULT_LOGGER_INFO(...)      Logger::GetDefaultLogger()->info(__VA_ARGS__)
+    #define DEFAULT_LOGGER_INIT() Logger::Init()
+    
+    #define DEFAULT_LOGGER_ERROR(...)                \
+    Logger::GetDefaultLogger()->error(fmt::format(   \
+        ::fmt::bg(::fmt::terminal_color::black) |    \
+        ::fmt::fg(::fmt::terminal_color::white) |    \
+        ::fmt::emphasis(::fmt::emphasis::bold),      \
+        __VA_ARGS__                                  \
+    ))                                           
+    
+    #define DEFAULT_LOGGER_WARN(...)                 \
+    Logger::GetDefaultLogger()->warn(fmt::format(    \
+        ::fmt::bg(::fmt::terminal_color::yellow) |   \
+        ::fmt::fg(::fmt::terminal_color::white)  |   \
+        ::fmt::emphasis(::fmt::emphasis::bold),      \
+        __VA_ARGS__                                  \
+    ))
+    
+    #define DEFAULT_LOGGER_CRITICAL(...)             \
+    Logger::GetDefaultLogger()->critical(fmt::format(\
+        ::fmt::bg(::fmt::terminal_color::red)   |    \
+        ::fmt::fg(::fmt::terminal_color::white) |    \
+        ::fmt::emphasis(::fmt::emphasis::bold),      \
+        __VA_ARGS__                                  \
+    ))
+    
+    #define DEFAULT_LOGGER_INFO(...)                 \
+    Logger::GetDefaultLogger()->info(fmt::format(    \
+        ::fmt::bg(::fmt::terminal_color::green) |    \
+        ::fmt::fg(::fmt::terminal_color::white) |    \
+        ::fmt::emphasis(::fmt::emphasis::bold),      \
+        __VA_ARGS__                                  \
+    ))
 
     #define DEFAULT_LOGGER_COLOR_ERROR(background_color, foreground_color, text_style, ...) \
     Logger::GetDefaultLogger()->error(fmt::format(         \

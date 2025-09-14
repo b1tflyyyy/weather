@@ -33,7 +33,8 @@
 
 #include <model/forecast-card/forecast-card.hpp>
 
-class ForecastCardListModel : public QAbstractListModel
+class ForecastCardListModel 
+    : public QAbstractListModel
 {
     Q_OBJECT
 

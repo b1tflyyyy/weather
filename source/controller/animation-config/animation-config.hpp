@@ -30,20 +30,36 @@
 #include <model/animation-config/animation-config.hpp>
 
 #include <utils/logger/logger.hpp>
+#include <utils/error-handling/error-emitter/error-emitter.hpp>
+
 #include <service/json-io/json-io.hpp>
 
-class AnimationConfigController : public QObject, protected JsonIO
+#include <interface/iconfig.hpp>
+#include <interface/ipath.hpp>
+#include <interface/ierror-emitter.hpp>
+
+class AnimationConfigController 
+    : public QObject
+    , public IConfigReader
+    , public IPath
+    , public IErrorEmitter
+    , protected JsonIO
 {
     Q_OBJECT 
 
     Q_PROPERTY(QObject* animationConfig READ GetAnimationSettings CONSTANT);
 
 public:
-    AnimationConfigController() = default;
+    void SetPath(const QString& path) override;
+    const QString& GetPath() const noexcept override;
 
-    void LoadAnimationSettings(const QString& path);
+    void Load() override;
     QObject* GetAnimationSettings();
+
+    ErrorEmitter* GetErrorEmitter() override;
 
 private:
     AnimationConfigModel mAnimationSpeedModel;
+    ErrorEmitter mErrorEmitter;
+    QString mPath;
 };

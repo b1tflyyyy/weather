@@ -25,7 +25,8 @@
 #include <QObject>
 #include <QString>
 
-class ForecastCardModel : public QObject 
+class ForecastCardModel 
+    : public QObject 
 {
     Q_OBJECT
 

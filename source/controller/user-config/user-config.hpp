@@ -28,24 +28,42 @@
 #include <model/user-config/user-config.hpp>
 
 #include <utils/logger/logger.hpp>
+#include <utils/error-handling/error-emitter/error-emitter.hpp>
+
 #include <service/json-io/json-io.hpp>
 
-class UserConfigController : public QObject, protected JsonIO
+#include <interface/iconfig.hpp>
+#include <interface/ipath.hpp>
+#include <interface/ierror-emitter.hpp>
+
+class UserConfigController 
+    : public QObject
+    , public IConfigStorage
+    , public IPath
+    , public IErrorEmitter
+    , protected JsonIO
 {
     Q_OBJECT
 
     Q_PROPERTY(QObject* userConfig READ GetUserConfig CONSTANT);
 
 public:
-    UserConfigController(const QString& path);
+    void SetPath(const QString& path) override;
+    const QString& GetPath() const noexcept override;
 
-    void LoadUserConfig();
-    Q_INVOKABLE void SaveUserConfig();
+    Q_INVOKABLE void Load() override;
+    Q_INVOKABLE void Save() override;
+
+    ErrorEmitter* GetErrorEmitter() override;
 
     QObject* GetUserConfig();
     const UserConfigModel& GetInternalUserConfig() const noexcept; 
     
+signals:
+    void userConfigLoadedSuccessfully(const UserConfigModel& user_config);
+
 private:
     QString mPath;
     UserConfigModel mUserConfigModel;
+    ErrorEmitter mErrorEmitter;
 };

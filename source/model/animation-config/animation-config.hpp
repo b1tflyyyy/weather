@@ -29,7 +29,9 @@
 
 #include <interface/isjon-serializable.hpp>
 
-class AnimationConfigModel : public QObject, public IFromJson
+class AnimationConfigModel 
+    : public QObject
+    , public IFromJson
 {
     Q_OBJECT 
 
@@ -39,8 +41,6 @@ public:
     friend void swap(AnimationConfigModel& lhs, AnimationConfigModel& rhs) noexcept;
 
 public:
-    AnimationConfigModel() = default;
-
     int GetThemeChangingDuration() const noexcept;
     void FromJson(const QJsonObject& json) override;
 

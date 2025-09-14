@@ -28,12 +28,12 @@
 #include <QMessageBox>
 
 #include <model/animation-config/animation-config.hpp>
-#include <model/theme-config/theme-config.hpp>
-#include <model/theme-config-list/theme-config-list.hpp>
+#include <model/theme/theme.hpp>
+#include <model/theme-list/theme-list.hpp>
 #include <model/user-config/user-config.hpp>
 #include <model/forecast-card-list/forecast-card-list.hpp>
 
-#include <controller/theme-config/theme-config.hpp>
+#include <controller/theme/theme.hpp>
 #include <controller/animation-config/animation-config.hpp>
 #include <controller/user-config/user-config.hpp>
 #include <controller/forecast-card/forecast-card.hpp>
@@ -41,9 +41,19 @@
 #include <internal/opengl/qml/gradient-background/gradient-background.hpp>
 
 #include <utils/logger/logger.hpp>
+#include <utils/error-handling/error-handler/error-handler.hpp>
+#include <utils/error-handling/error-emitter/error-emitter.hpp>
+
+#include <interface/ierror-emitter.hpp>
 
 static void RegisterQMLTypes();
 static void SetupFormat();
+
+template <typename... Emitters> requires (std::is_base_of_v<IErrorEmitter, Emitters> && ...)
+static void RegisterErrorEmitters(ErrorHandler* error_handler, Emitters*... error_emitter)
+{
+    (QObject::connect(error_emitter->GetErrorEmitter(), &ErrorEmitter::errorOccurred, error_handler, &ErrorHandler::handlerError), ...);
+};
 
 int main(int argc, char** argv)
 {
@@ -53,57 +63,50 @@ int main(int argc, char** argv)
     SetupFormat();
     QApplication app{ argc, argv };
 
-    ThemeConfigController theme_config_controller{};
+    ErrorHandler error_handler{};
+
+    ThemeController theme_controller{};
     AnimationConfigController animation_config_controller{};
-    UserConfigController user_config_controller{ QStringLiteral("user_config.json") }; // TODO: remove this    
+    UserConfigController user_config_controller{};
+    ForecastCardController forecast_card_controller{};
+
+    ThemeListModel theme_list_model{};
     ForecastCardListModel forecast_card_list_model{};
 
-    try 
-    {
-        // TODO: create an interface for load/save configs
-        theme_config_controller.LoadThemes(QStringLiteral("themes.json"));
-        animation_config_controller.LoadAnimationSettings(QStringLiteral("animation_settings.json"));
-        user_config_controller.LoadUserConfig(); // TODO: rewrite
-    }
-    catch (const std::runtime_error& e)
-    {
-        const std::string& error_message{ std::format("Error: {}", e.what()) };
+    RegisterErrorEmitters(&error_handler, 
+                          &theme_controller,
+                          &animation_config_controller,
+                          &user_config_controller);
 
-        DEFAULT_LOGGER_COLOR_CRITICAL(Logger::Tc::red,
-                                      Logger::Tc::white,
-                                      Logger::Emp::bold, 
-                                      "{}", error_message.c_str());
+    QObject::connect(&theme_controller, &ThemeController::themeListLoadedSuccessfully, 
+                     &theme_list_model, &ThemeListModel::themeListUpdate);
+    
+    QObject::connect(&forecast_card_controller, &ForecastCardController::forecastUpdated,
+                     &forecast_card_list_model, &ForecastCardListModel::setForecastCards);
 
-        QMessageBox message_box{};
-        message_box.setWindowTitle(QStringLiteral("Critical Error"));
-        message_box.setText(QString{ error_message.c_str() });
-        message_box.setDefaultButton(QMessageBox::Ok);
-        message_box.setIcon(QMessageBox::Critical);
-        
-        message_box.exec();
-        
-        return -1;
-    }
+    QObject::connect(&user_config_controller, &UserConfigController::userConfigLoadedSuccessfully,
+                     &forecast_card_controller, &ForecastCardController::userConfigUpdated);
 
-    ForecastCardController forecast_card_controller{ user_config_controller.GetInternalUserConfig() };
+    QObject::connect(&user_config_controller, &UserConfigController::userConfigLoadedSuccessfully,
+                     &theme_list_model, &ThemeListModel::userConfigLoaded);
 
-    auto* user_config_model{ dynamic_cast<UserConfigModel*>(user_config_controller.GetUserConfig()) };
-    theme_config_controller.SetCurrentTheme(user_config_model->GetThemeIndex());
+    theme_controller.SetPath(QStringLiteral("themes.json"));
+    animation_config_controller.SetPath(QStringLiteral("animation_settings.json"));
+    user_config_controller.SetPath(QStringLiteral("user_config.json"));
 
-    ThemeConfigListModel theme_config_list_model{ theme_config_controller.GetThemes() };
+    theme_controller.Load();
+    animation_config_controller.Load();
+    user_config_controller.Load();
 
     QQmlApplicationEngine engine{};
     auto* ctx{ engine.rootContext() };
     
-    ctx->setContextProperty(QStringLiteral("themeConfigController"), &theme_config_controller);
-    ctx->setContextProperty(QStringLiteral("themeConfigListModel"), &theme_config_list_model);
+    ctx->setContextProperty(QStringLiteral("themeConfigController"), &theme_controller);
+    ctx->setContextProperty(QStringLiteral("themeModel"), &theme_list_model);
     ctx->setContextProperty(QStringLiteral("animationConfigController"), &animation_config_controller);
     ctx->setContextProperty(QStringLiteral("userConfigController"), &user_config_controller);
     ctx->setContextProperty(QStringLiteral("forecastCardModel"), &forecast_card_list_model);
     ctx->setContextProperty(QStringLiteral("forecastCardController"), &forecast_card_controller);
-
-    QObject::connect(&forecast_card_controller, &ForecastCardController::forecastUpdated,
-                     &forecast_card_list_model, &ForecastCardListModel::setForecastCards);
 
     RegisterQMLTypes();
 
@@ -115,7 +118,7 @@ int main(int argc, char** argv)
 
 void RegisterQMLTypes()
 {
-    qmlRegisterUncreatableType<ThemeConfigModel>("ThemeConfigModel", 1, 0, "ThemeConfigModel", "");
+    qmlRegisterUncreatableType<ThemeModel>("ThemeConfigModel", 1, 0, "ThemeConfigModel", "");
     qmlRegisterUncreatableType<AnimationConfigModel>("AnimationConfigModel", 1, 0, "AnimationConfigModel", "");
     qmlRegisterUncreatableType<UserConfigModel>("UserConfigModel", 1, 0, "UserConfigModel", "");
 

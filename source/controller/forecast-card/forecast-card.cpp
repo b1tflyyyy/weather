@@ -22,8 +22,7 @@
 
 #include "forecast-card.hpp"
 
-ForecastCardController::ForecastCardController(const UserConfigModel& user_config_model)
-    : mWeatherbitAPIService{ user_config_model }
+ForecastCardController::ForecastCardController()
 { 
     SetupConnection();
 }
@@ -38,6 +37,11 @@ void ForecastCardController::weatherAPIServiceDataFetched(const QString& json)
 {
     DEFAULT_LOGGER_INFO("message from {}\n", __PRETTY_FUNCTION__);
     emit forecastFetchedSuccessfully();
+}
+
+void ForecastCardController::userConfigUpdated(const UserConfigModel& user_config)
+{
+    mWeatherbitAPIService.SetUserConfig(user_config);
 }
 
 void ForecastCardController::SetupConnection()

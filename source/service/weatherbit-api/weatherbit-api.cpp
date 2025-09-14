@@ -22,14 +22,6 @@
 
 #include "weatherbit-api.hpp"
 
-WeatherbitAPIService::WeatherbitAPIService(const UserConfigModel& user_cfg)
-{
-    InitRequests(user_cfg.GetLongitude(), 
-                 user_cfg.GetLatitude(),
-                 user_cfg.GetUnits(),
-                 user_cfg.GetWeatherAPIToken());
-}
-
 void WeatherbitAPIService::FetchMultiDayWeatherForecast()
 {
     QNetworkReply* reply{ mNetworkAccessManager.get(mDailyRequest) };
@@ -46,6 +38,14 @@ void WeatherbitAPIService::FetchMultiDayWeatherForecast()
 
         emit weatherForecastFetchedSuccessfully(QString::fromUtf8(bytes));
     });
+}
+
+void WeatherbitAPIService::SetUserConfig(const UserConfigModel& user_config)
+{
+    InitRequests(user_config.GetLongitude(), 
+                 user_config.GetLatitude(),
+                 user_config.GetUnits(),
+                 user_config.GetWeatherAPIToken());
 }
 
 void WeatherbitAPIService::InitRequests(double longitude, double latitude, const QString& units, const QString& token)

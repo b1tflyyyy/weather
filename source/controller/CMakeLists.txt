@@ -22,7 +22,7 @@
 
 cmake_minimum_required(VERSION 3.28)
 
-add_subdirectory(theme-config)
+add_subdirectory(theme)
 add_subdirectory(animation-config)
 add_subdirectory(user-config)
 add_subdirectory(forecast-card)

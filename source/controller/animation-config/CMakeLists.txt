@@ -32,4 +32,5 @@ target_link_libraries(${LIB_NAME} PUBLIC
     animation_config_model
     logger
     json_io
+    error_emitter
 )

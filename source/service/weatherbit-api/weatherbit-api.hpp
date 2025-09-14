@@ -36,14 +36,15 @@
 #include <model/user-config/user-config.hpp>
 #include <utils/logger/logger.hpp>
 
-class WeatherbitAPIService : public QObject, public IWeatherForecastAPI
+class WeatherbitAPIService 
+    : public QObject 
+    , public IWeatherForecastAPI
 {
     Q_OBJECT
 
 public:
-    explicit WeatherbitAPIService(const UserConfigModel& user_cfg);
-
     void FetchMultiDayWeatherForecast() override;
+    void SetUserConfig(const UserConfigModel& user_config);
 
 signals:
     void weatherForecastFetchedSuccessfully(const QString& json);

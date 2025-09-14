@@ -41,12 +41,13 @@
 
 #include <service/weatherbit-api/weatherbit-api.hpp>
 
-class ForecastCardController : public QObject
+class ForecastCardController 
+    : public QObject
 {
     Q_OBJECT
 
 public:
-    ForecastCardController(const UserConfigModel& user_config_model);
+    ForecastCardController();
 
     Q_INVOKABLE void FetchForecast();
 
@@ -56,6 +57,7 @@ signals:
     
 public slots:
     void weatherAPIServiceDataFetched(const QString& json);
+    void userConfigUpdated(const UserConfigModel& user_config);
 
 private:
     void SetupConnection();

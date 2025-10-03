@@ -31,14 +31,16 @@
 
 class JsonIO
 {
-public:
-    JsonIO() = default;
-    ~JsonIO() noexcept = default;
-
 protected:
+    // Read/Write JSON from/to file
     void ReadJson(IFromJson* abstract_object, const QString& path, QFlags<QIODeviceBase::OpenModeFlag> flags = QIODeviceBase::ReadOnly);
     void WriteJson(const IToJson* abstract_object, const QString& path, QFlags<QIODeviceBase::OpenModeFlag> flags = QIODeviceBase::WriteOnly);
 
+    // Read/Write JSON from/to file
     QJsonArray ReadJsonArray(const QString& path, QFlags<QIODeviceBase::OpenModeFlag> flags = QIODeviceBase::ReadOnly);    
     void WriteJsonArray(const QVector<IToJson*>& container, const QString& path, QFlags<QIODeviceBase::OpenModeFlag> flags = QIODeviceBase::WriteOnly);
+
+    // Parse regular JSON
+    QJsonArray ParseJsonArray(const QByteArray& json);
+    QJsonObject ParseJson(const QByteArray& json);
 };

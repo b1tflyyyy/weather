@@ -34,7 +34,7 @@ ForecastCardListModel::ForecastCardListModel()
         -1
     ) };
 
-    std::fill_n(std::back_inserter(mForecastCards), 7, init); // 7 - week days 
+    std::fill_n(std::back_inserter(mForecastCards), 16, init); // 7 - week days 
 }
 
 int ForecastCardListModel::rowCount([[maybe_unused]] const QModelIndex& index) const { return std::size(mForecastCards); }

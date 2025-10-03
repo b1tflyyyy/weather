@@ -34,9 +34,7 @@ void WeatherbitAPIService::FetchMultiDayWeatherForecast()
         }
 
         QByteArray bytes{ reply->readAll() };
-        DEFAULT_LOGGER_INFO("Reply:\n{}\n", QString{ bytes }.toStdString());
-
-        emit weatherForecastFetchedSuccessfully(QString::fromUtf8(bytes));
+        emit weatherForecastFetchedSuccessfully(bytes);
     });
 }
 

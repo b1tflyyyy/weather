@@ -34,7 +34,7 @@ void JsonIO::ReadJson(IFromJson* abstract_object, const QString& path, QFlags<QI
     file.close();
 
     QJsonParseError err{};
-    auto document{ QJsonDocument::fromJson(data) };
+    auto document{ QJsonDocument::fromJson(data, &err) };
 
     if (err.error != QJsonParseError::NoError)
     {
@@ -72,7 +72,7 @@ QJsonArray JsonIO::ReadJsonArray(const QString& path, QFlags<QIODeviceBase::Open
     file.close();
 
     QJsonParseError err{};
-    auto document{ QJsonDocument::fromJson(data) };
+    auto document{ QJsonDocument::fromJson(data, &err) };
 
     if (err.error != QJsonParseError::NoError)
     {
@@ -102,4 +102,34 @@ void JsonIO::WriteJsonArray(const QVector<IToJson*>& container, const QString& p
 
     file.write(QJsonDocument{ array }.toJson());
     file.close();
+}
+
+QJsonArray JsonIO::ParseJsonArray(const QByteArray& json)
+{
+    QJsonParseError err{};
+    auto document{ QJsonDocument::fromJson(json, &err) };
+
+    if (err.error != QJsonParseError::NoError)
+    {
+        throw std::runtime_error{ "failed to parse json" };
+    }
+    if (!document.isArray())
+    {
+        throw std::runtime_error{ "json is not an array" };
+    }
+
+    return document.array();
+}
+
+QJsonObject JsonIO::ParseJson(const QByteArray& json)
+{
+    QJsonParseError err{};
+    auto document{ QJsonDocument::fromJson(json, &err) };
+
+    if (err.error != QJsonParseError::NoError)
+    {
+        throw std::runtime_error{ "failed to parse json" };
+    }
+
+    return document.object();
 }

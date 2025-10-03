@@ -47,7 +47,7 @@ public:
     void SetUserConfig(const UserConfigModel& user_config);
 
 signals:
-    void weatherForecastFetchedSuccessfully(const QString& json);
+    void weatherForecastFetchedSuccessfully(const QByteArray& json);
 
 private:
     void InitRequests(double longitude, double latitude, const QString& units, const QString& token);

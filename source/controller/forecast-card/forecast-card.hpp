@@ -32,7 +32,7 @@
 #include <QUrl>
 #include <QUrlQuery>
 
-#include <thread>
+#include <QDateTime>
 
 #include <model/forecast-card/forecast-card.hpp>
 #include <model/user-config/user-config.hpp>
@@ -40,9 +40,13 @@
 #include <utils/logger/logger.hpp>
 
 #include <service/weatherbit-api/weatherbit-api.hpp>
+#include <service/weatherbit-api/dto/weatherbit-dto.hpp>
+
+#include <service/json-io/json-io.hpp>
 
 class ForecastCardController 
     : public QObject
+    , protected JsonIO
 {
     Q_OBJECT
 
@@ -56,7 +60,7 @@ signals:
     void forecastUpdated(const QVector<QSharedPointer<ForecastCardModel>>& forecast_cards);
     
 public slots:
-    void weatherAPIServiceDataFetched(const QString& json);
+    void weatherAPIServiceDataFetched(const QByteArray& json);
     void userConfigUpdated(const UserConfigModel& user_config);
 
 private:

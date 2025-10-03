@@ -23,6 +23,7 @@
 #pragma once
 
 #include <QJsonObject>
+#include <QJsonArray>
 
 class IToJson
 {

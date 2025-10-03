@@ -32,4 +32,6 @@ target_link_libraries(${LIB_NAME} PUBLIC
     forecast_card_model
     logger
     weatherbit_api_service
+    weatherbit_dto
+    json_io
 )

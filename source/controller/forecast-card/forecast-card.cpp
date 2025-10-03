@@ -29,13 +29,43 @@ ForecastCardController::ForecastCardController()
 
 void ForecastCardController::FetchForecast()
 {
+    // QDateTime date{ QDateTime::fromString("2025-09-20", "yyyy-mm-dd") };
+    // DEFAULT_LOGGER_INFO("{}", date.toString("dddd").toStdString());
+
     mWeatherbitAPIService.FetchMultiDayWeatherForecast();
 }
 
 // TODO:
-void ForecastCardController::weatherAPIServiceDataFetched(const QString& json)
+void ForecastCardController::weatherAPIServiceDataFetched(const QByteArray& json)
 {
-    DEFAULT_LOGGER_INFO("message from {}\n", __PRETTY_FUNCTION__);
+    DEFAULT_LOGGER_INFO("{}\n", QString::fromUtf8(json).toStdString());
+
+    auto dto{ QSharedPointer<WeatherbitDTO>::create() };
+
+    QVector<QSharedPointer<ForecastCardModel>> weather_day_cards_model{};
+    weather_day_cards_model.resize(16);
+
+    auto object{ ParseJson(json) };
+    dto->FromJson(object);
+
+    for (qsizetype i{}; i < std::size(weather_day_cards_model); ++i)
+    {
+        auto day{ dto->GetDayData(i) };
+        
+        DEFAULT_LOGGER_INFO("{}", day->GetDateTime().toString().toStdString());
+
+        weather_day_cards_model[i] = QSharedPointer<ForecastCardModel>::create(
+            QStringLiteral("some_image_path"),
+            QStringLiteral("description"),
+            QString{ "%1, %2" }.arg(dto->GetCountryCode()).arg(dto->GetCityName()),
+            day->GetDateTime().toString("dddd"),
+            day->GetCurrentTemp(),
+            day->GetDayLowTemp(),
+            day->GetDayHighTemp()
+        );
+    }
+
+    emit forecastUpdated(weather_day_cards_model);
     emit forecastFetchedSuccessfully();
 }
 
